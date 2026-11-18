@@ -1,1 +1,1551 @@
 
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Prototipo Refugio Esperanza</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: sitio institucional de una sola tipografía (Montserrat, Manual IV). Cabecera blanca, bandas azul medianoche,
+   tarjetas blancas; el arco de las manos del logo se usa como marco de las fotos principales. Tema claro deliberado:
+   el manual pide el logo sobre fondo blanco o claro. */
+:root{
+  --navy:#1E2B5A;        /* Azul Medianoche · confianza, títulos */
+  --navy-deep:#17224A;
+  --sky:#50CBE8;         /* Azul Claro · cercanía */
+  --forest:#2E7D32;      /* Verde Bosque · programas sociales */
+  --lime:#66BB6A;        /* Verde Lima · destacados */
+  --orange:#FB8C00;      /* Naranja Cálido · acción */
+  --fuchsia:#EC407A;     /* Fucsia · campañas especiales */
+  --bg:#FFFFFF;
+  --soft:#F2F5FA;
+  --soft-green:#EDF6EE;
+  --line:#DDE3EE;
+  --line-strong:#B9C2D8;
+  --text:#333D60;
+  --muted:#5F688A;
+  --on-dark:#FFFFFF;
+  --on-dark-muted:#C5CCE4;
+  --f:'Montserrat','Century Gothic','Futura',system-ui,sans-serif;
+  --r:18px;
+  --hh:72px;
+  --shadow:0 14px 34px -18px rgba(30,43,90,.35);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:var(--f);font-size:16px;line-height:1.65;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:55;background:var(--bg)}
+h1,h2,h3,h4{font-family:var(--f);color:var(--navy);text-transform:uppercase;margin:0;line-height:1.15;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+img{max-width:100%;display:block}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- color helpers ---------- */
+.c-forest{--c:var(--forest)} .c-lime{--c:var(--lime)} .c-sky{--c:var(--sky)} .c-navy{--c:var(--navy)} .c-orange{--c:var(--orange)} .c-fuchsia{--c:var(--fuchsia)}
+.t-forest{--pc:var(--forest);--pc-soft:#E7F2E8}
+.t-lime{--pc:var(--lime);--pc-soft:#EDF7EE}
+.t-sky{--pc:var(--sky);--pc-soft:#E6F6FB}
+.t-navy{--pc:var(--navy);--pc-soft:#E8EBF4}
+.ic-c{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--c,var(--pc));flex:none}
+.ic-c .i{width:26px;height:26px}
+.ic-s{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:var(--pc-soft,var(--soft));color:var(--navy);flex:none}
+.ic-s .i{width:22px;height:22px}
+
+/* ---------- prototype notes ---------- */
+.note{display:none}
+.notes-on .note{display:inline-flex;align-items:center;gap:6px;font-size:.7rem;font-weight:600;letter-spacing:0;text-transform:none;line-height:1.35;color:#4A3500;background:#FFF6D9;border:1px dashed #C99A00;padding:4px 9px;border-radius:8px;vertical-align:middle;max-width:100%}
+.note-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.todo{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:600;color:var(--muted);background:#fff;border:1px dashed var(--line-strong);border-radius:6px;padding:2px 8px;text-transform:none;letter-spacing:0;white-space:nowrap}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;padding:13px 22px;border-radius:999px;border:2px solid transparent;text-decoration:none;cursor:pointer;transition:transform .15s,background-color .15s,box-shadow .15s,border-color .15s;white-space:nowrap;line-height:1.2}
+.btn .i{width:17px;height:17px}
+.btn-orange{background:var(--orange);color:var(--navy)}
+.btn-orange:hover{background:#FF9B1F;transform:translateY(-1px);box-shadow:0 10px 20px -10px rgba(251,140,0,.85)}
+.btn-green{background:var(--forest);color:#fff}
+.btn-green:hover{background:#276A2A;transform:translateY(-1px)}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-navy:hover{background:#26356C;transform:translateY(-1px)}
+.btn-ghost{border-color:rgba(255,255,255,.7);color:#fff;background:transparent}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.btn-line{border-color:var(--navy);color:var(--navy);background:transparent}
+.btn-line:hover{background:var(--soft)}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.link{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;color:var(--forest);text-decoration:none}
+.link:hover{text-decoration:underline}
+.link .i{width:16px;height:16px}
+
+/* ---------- header ---------- */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}
+.hdr{display:flex;align-items:center;gap:18px;height:var(--hh)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none;min-width:0}
+.brand img{height:44px;width:auto}
+.brand-txt{display:flex;flex-direction:column;line-height:1.1;color:var(--navy)}
+.brand-txt small{font-size:.66rem;font-weight:500;letter-spacing:.2em}
+.brand-txt b{font-size:.98rem;font-weight:700;white-space:nowrap}
+.nav{display:flex;align-items:center;gap:2px;margin-left:auto}
+.nav a{position:relative;text-decoration:none;font-weight:600;font-size:.84rem;color:var(--navy);padding:8px 10px;border-radius:8px;white-space:nowrap}
+.nav a:hover{background:var(--soft)}
+.nav a.active{color:var(--forest)}
+.nav a.active::after{content:"";position:absolute;left:10px;right:10px;bottom:1px;height:2px;border-radius:2px;background:var(--forest)}
+.hdr-cta{flex:none}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--navy);place-items:center;cursor:pointer;flex:none}
+@media (max-width:1120px){
+  .nav{position:fixed;top:calc(env(safe-area-inset-top,0px) + var(--hh));left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 24px 30px -24px rgba(30,43,90,.4);padding:6px max(20px,env(safe-area-inset-right,0px)) 14px max(20px,env(safe-area-inset-left,0px));opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s,visibility .2s}
+  .nav.open{opacity:1;visibility:visible;transform:none}
+  .nav a{padding:13px 6px;border-bottom:1px solid var(--line);border-radius:0;font-size:.95rem}
+  .nav a.active::after{display:none}
+  .hdr-cta{margin-left:auto}
+  .burger{display:inline-grid}
+}
+@media (max-width:480px){
+  .brand-txt small{display:none}
+  .brand img{height:38px}
+  .brand-txt b{font-size:.86rem}
+  .hdr-cta .lbl{display:none}
+  .hdr-cta{padding:12px 14px}
+  .hdr{gap:10px}
+}
+
+/* ---------- placeholders de foto ---------- */
+.ph{position:relative;margin:0;overflow:hidden;border-radius:var(--r);aspect-ratio:4/3;max-width:100%;background:linear-gradient(155deg,var(--ph-a,#E3E8F3),var(--ph-b,#C9D1E6))}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph .ph-ic{position:absolute;inset:0;display:grid;place-items:center;color:var(--ph-ink,var(--navy));opacity:.32}
+.ph .ph-ic .i{width:min(34%,96px);height:auto;stroke-width:1.4}
+.ph figcaption{position:absolute;left:12px;bottom:12px;right:12px;width:max-content;max-width:calc(100% - 24px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.7rem;font-weight:600;color:var(--navy);background:rgba(255,255,255,.9);padding:4px 10px;border-radius:999px}
+.ph.has-img .ph-ic,.ph.has-img figcaption{display:none}
+.ph[data-tone=forest]{--ph-a:#DDEDDE;--ph-b:#B5D6B8;--ph-ink:var(--forest)}
+.ph[data-tone=lime]{--ph-a:#E6F4E7;--ph-b:#C3E4C5;--ph-ink:var(--forest)}
+.ph[data-tone=sky]{--ph-a:#E0F4FA;--ph-b:#B3E3F0;--ph-ink:#17667C}
+.ph[data-tone=navy]{--ph-a:#DFE3F0;--ph-b:#B8C1DD;--ph-ink:var(--navy)}
+.ph[data-tone=orange]{--ph-a:#FFEED8;--ph-b:#FFD4A1;--ph-ink:#8A4B00}
+.ph.arch{border-radius:999px 999px var(--r) var(--r);aspect-ratio:4/4.6}
+
+/* ---------- sections ---------- */
+.sec{padding-block:80px}
+.sec.tight{padding-block:56px}
+.sec.soft{background:var(--soft)}
+.sec.tint{background:var(--pc-soft)}
+.sec-head{max-width:740px;margin:0 auto 44px;text-align:center}
+.sec-head h2{font-size:clamp(1.45rem,2.7vw,2.1rem);font-weight:800;letter-spacing:.01em}
+.sec-head .rule{display:block;width:56px;height:4px;border-radius:4px;background:var(--lime);margin:14px auto 0}
+.sec-head p{color:var(--muted);margin-top:16px;font-size:1.02rem}
+.sec-head.left{text-align:left;margin-left:0}
+.sec-head.left .rule{margin-left:0}
+.eyebrow{display:block;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--forest);margin-bottom:10px}
+.lead{font-size:1.06rem;color:var(--muted)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.split > *{min-width:0}
+.checks-list{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:10px}
+.checks-list li{display:flex;gap:10px;align-items:flex-start;font-weight:500}
+.checks-list .i{color:var(--forest);margin-top:3px}
+
+/* ---------- inicio: hero ---------- */
+.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:44px;align-items:end;padding-top:64px}
+.hero-grid > *{min-width:0}
+.hero-copy{padding-bottom:68px;position:relative;z-index:1}
+.hero h1{color:#fff;font-size:clamp(1.95rem,4.3vw,3.2rem);font-weight:800;line-height:1.08;letter-spacing:.005em}
+.hl-lime{color:var(--lime)} .hl-sky{color:var(--sky)}
+.hero .lead{color:var(--on-dark-muted);margin-top:22px;max-width:33em;font-size:1.08rem}
+.hero .btns{margin-top:30px}
+.hero-photo{position:relative;z-index:1}
+.hero-photo .ph{border-radius:999px 999px 0 0;aspect-ratio:4/4.3}
+.arch-deco{position:absolute;color:#fff;pointer-events:none}
+.arch-deco path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.hero .arch-deco{right:-2%;top:30px;width:min(640px,58%);opacity:.11}
+.pillars{background:var(--navy-deep)}
+.pillars-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.pillar{display:flex;gap:14px;align-items:flex-start;padding:26px 20px}
+.pillar + .pillar{border-left:1px solid rgba(255,255,255,.12)}
+.pillar .ic-c{width:50px;height:50px}
+.pillar .ic-c .i{width:24px;height:24px}
+.pillar h3{color:#fff;font-size:.9rem;letter-spacing:.06em}
+.pillar p{color:var(--on-dark-muted);font-size:.84rem;line-height:1.5;margin-top:4px}
+
+/* ---------- programas ---------- */
+.prog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.prog{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:26px 22px;display:flex;flex-direction:column;gap:12px;transition:box-shadow .2s,transform .2s}
+.prog:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+.prog h3{font-size:.92rem;letter-spacing:.02em;line-height:1.3}
+.prog p{color:var(--muted);font-size:.9rem;line-height:1.55}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.prog .chips{margin-top:auto;padding-top:4px}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;font-weight:600;color:var(--navy);background:var(--soft);border:1px solid var(--line);padding:6px 12px;border-radius:999px;text-decoration:none;line-height:1.3}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,var(--forest));flex:none}
+a.chip:hover{border-color:var(--navy)}
+.chip.plain::before{display:none}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--bg);border:1px solid var(--line);border-radius:var(--r)}
+.stat{padding:28px 24px;min-width:0}
+.stat + .stat{border-left:1px solid var(--line)}
+.stat b{display:block;font-size:clamp(2rem,3.4vw,2.6rem);font-weight:800;color:var(--navy);line-height:1;font-variant-numeric:tabular-nums}
+.stat b small{font-size:.55em;font-weight:700}
+.stat span{display:block;color:var(--muted);font-size:.86rem;margin-top:10px;line-height:1.45}
+.stat .dot{display:block;width:28px;height:4px;border-radius:4px;background:var(--c);margin-bottom:16px}
+
+/* ---------- causa ---------- */
+.cause{display:grid;grid-template-columns:1.35fr 1fr}
+.cause > *{min-width:0}
+.cause-photo{position:relative;min-height:300px;display:flex;align-items:center}
+.cause-photo .ph{position:absolute;inset:0;border-radius:0;aspect-ratio:auto}
+.cause-photo .ph .ph-ic{display:none}
+.cause-photo .ph figcaption{z-index:2}
+.cause-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(23,34,74,.92) 0%,rgba(23,34,74,.6) 70%,rgba(23,34,74,.35))}
+.cause-quote{position:relative;z-index:1;padding:48px max(20px,env(safe-area-inset-left,0px)) 48px max(40px,env(safe-area-inset-left,0px));max-width:620px;margin-left:auto}
+.cause-quote .qm{font-size:4.5rem;line-height:.6;font-weight:800;color:var(--lime);display:block;height:34px}
+.cause-quote p{color:#fff;font-size:clamp(1.2rem,2.1vw,1.55rem);font-weight:600;line-height:1.4}
+.cause-cta{background:var(--forest);color:#fff;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:48px max(20px,env(safe-area-inset-right,0px)) 48px 44px}
+.cause-cta h2{color:#fff;font-size:clamp(1.3rem,2.3vw,1.7rem);font-weight:800}
+.cause-cta p{color:#DDEFDF;max-width:26em}
+
+/* ---------- noticias ---------- */
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.news{display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;text-decoration:none;transition:box-shadow .2s,transform .2s}
+.news:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+.news .ph{border-radius:0;aspect-ratio:16/10}
+.news-body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.news-meta{display:flex;flex-wrap:wrap;gap:10px;font-size:.74rem;color:var(--muted);align-items:center}
+.tag{font-weight:700;color:var(--forest);text-transform:uppercase;letter-spacing:.1em}
+.news h3{font-size:.95rem;line-height:1.35}
+.news .link{margin-top:auto}
+
+/* ---------- page hero ---------- */
+.phero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+.phero .wrap{position:relative;z-index:1;padding-block:52px 58px}
+.crumbs{display:flex;flex-wrap:wrap;gap:6px 8px;font-size:.78rem;color:var(--on-dark-muted);margin-bottom:16px;align-items:center}
+.crumbs a{color:inherit;text-decoration:none}
+.crumbs a:hover{color:#fff;text-decoration:underline}
+.phero h1{color:#fff;font-size:clamp(1.75rem,3.9vw,2.75rem);font-weight:800;max-width:19em}
+.phero .lead{color:var(--on-dark-muted);max-width:40em;margin-top:16px}
+.phero .arch-deco{right:-60px;bottom:-60px;width:min(520px,62vw);opacity:.1}
+.phero.proj{background:var(--pc-soft);color:var(--navy)}
+.phero.proj .crumbs{color:var(--muted)}
+.phero.proj .crumbs a:hover{color:var(--navy)}
+.phero.proj h1{color:var(--navy)}
+.phero.proj .lead{color:var(--text)}
+.phero.proj .wrap{padding-block:44px 56px}
+.phero.proj .arch-deco{color:var(--pc);opacity:.18}
+.proj-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.proj-grid > *{min-width:0}
+.line-chip{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);background:var(--bg);border-radius:999px;padding:6px 14px 6px 8px;margin-bottom:16px}
+.line-chip::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--pc)}
+.kind{display:block;font-weight:600;color:var(--muted);margin-top:8px}
+.badge{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--navy);color:#fff;padding:4px 10px;border-radius:999px;margin-left:10px;vertical-align:middle}
+
+/* ---------- cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(var(--cols,3),1fr);gap:20px}
+.cards > *{min-width:0}
+.card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:26px;display:flex;flex-direction:column;gap:12px}
+.card h3{font-size:.9rem;letter-spacing:.03em;line-height:1.35}
+.card p{color:var(--muted);font-size:.92rem;line-height:1.6}
+.card .btns,.card .link{margin-top:auto}
+.card.head-row{flex-direction:row;align-items:flex-start;gap:16px}
+.card.head-row > div{display:flex;flex-direction:column;gap:8px;min-width:0}
+.mv{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.mv > div{background:var(--pc-soft);border-radius:var(--r);padding:30px}
+.mv h3{font-size:.8rem;letter-spacing:.18em;color:var(--forest);margin-bottom:12px}
+.mv p{font-size:1rem;line-height:1.7;color:var(--text)}
+.story{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:30px;display:flex;flex-direction:column;gap:12px;position:relative}
+.story .qm{font-size:3.6rem;line-height:.5;height:24px;font-weight:800;color:var(--pc,var(--lime))}
+.story h3{font-size:.92rem;line-height:1.35}
+.story p{color:var(--text);line-height:1.7}
+.facts{border-top:1px solid var(--line)}
+.fact{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);align-items:center;flex-wrap:wrap}
+.fact span{color:var(--muted);font-size:.9rem}
+.fact b{color:var(--navy);font-weight:700;text-align:right}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.soon{border:2px dashed var(--line-strong);border-radius:var(--r);padding:34px;text-align:center;display:grid;gap:12px;justify-items:center;background:var(--bg)}
+.soon .i{width:34px;height:34px;color:var(--pc,var(--navy))}
+.soon p{max-width:36em;color:var(--muted)}
+.cta-band{background:var(--navy);color:#fff;border-radius:24px;padding:44px;display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;position:relative;overflow:hidden}
+.cta-band > :not(.arch-deco){min-width:0;position:relative;z-index:1}
+.cta-band h2{color:#fff;font-size:clamp(1.3rem,2.4vw,1.75rem);font-weight:800}
+.cta-band p{color:var(--on-dark-muted);margin-top:10px;max-width:38em}
+.cta-band .arch-deco{right:-40px;bottom:-90px;width:360px;opacity:.1}
+.more{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:28px}
+.more > span{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+
+/* ---------- programas page ---------- */
+.line-block{display:grid;grid-template-columns:.9fr 1.6fr;gap:40px;padding-block:44px;border-top:1px solid var(--line);align-items:start}
+.line-block:first-child{border-top:0;padding-top:0}
+.line-block > *{min-width:0}
+.line-info{display:flex;flex-direction:column;gap:14px;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hh) + 24px)}
+.line-info h2{font-size:1.15rem;line-height:1.3;letter-spacing:.02em}
+.line-info p{color:var(--muted)}
+.proj-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.pcard{display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;text-decoration:none;transition:box-shadow .2s,transform .2s}
+.pcard:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+.pcard .ph{border-radius:0;aspect-ratio:16/10}
+.pcard-body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:8px;flex:1;border-top:4px solid var(--pc)}
+.pcard h3{font-size:.95rem}
+.pcard .kind{margin-top:0;font-size:.82rem}
+.pcard p{color:var(--muted);font-size:.9rem;line-height:1.55}
+.pcard .link{margin-top:auto;padding-top:6px}
+
+/* ---------- organigrama ---------- */
+.org{display:flex;flex-direction:column;align-items:center}
+.org-node{width:min(300px,100%);text-align:center;font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);background:var(--bg);border:2px solid var(--navy);border-radius:12px;padding:12px 16px}
+.org-node.top{background:var(--navy);color:#fff}
+.org-link{display:block;width:2px;height:22px;background:var(--line-strong)}
+.org-areas{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%;padding-top:24px}
+.org-areas::before{content:"";position:absolute;top:0;height:2px;background:var(--line-strong);left:calc((100% - 48px)/8);right:calc((100% - 48px)/8)}
+.org-area{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px}
+.org-area::before{content:"";position:absolute;top:-24px;left:50%;width:2px;height:24px;background:var(--line-strong)}
+.org-box{width:100%;min-height:62px;display:grid;place-items:center;text-align:center;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:10px 12px;line-height:1.35}
+.org-box.prog{background:var(--forest);border-color:var(--forest);color:#fff}
+.org-sub{font-size:.74rem;font-weight:600;color:var(--muted);border:1px dashed var(--line-strong);border-radius:10px;padding:6px 12px}
+.org-area:last-child::after{content:"";position:absolute;bottom:-26px;left:50%;width:2px;height:26px;background:var(--forest)}
+.org-prog{width:100%;margin-top:26px;border:2px solid var(--forest);border-radius:var(--r);padding:22px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;background:var(--soft-green)}
+.org-prog > div{display:flex;flex-direction:column;gap:10px;min-width:0}
+.org-prog h3{font-size:.72rem;letter-spacing:.06em;line-height:1.4;padding-bottom:10px;border-bottom:3px solid var(--pc)}
+.org-prog a{display:flex;align-items:center;justify-content:space-between;gap:8px;text-decoration:none;font-size:.84rem;font-weight:600;color:var(--navy);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+.org-prog a:hover{border-color:var(--navy)}
+.org-prog a .i{width:15px;height:15px;color:var(--muted)}
+
+/* ---------- logo / valores ---------- */
+.logo-card{background:var(--bg);border:1px solid var(--line);border-radius:24px;padding:36px;display:grid;place-items:center}
+.logo-card img{width:min(360px,100%);height:auto}
+.process{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px}
+.process b{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);background:var(--soft);border-radius:999px;padding:8px 14px}
+.process .i{color:var(--lime)}
+.concept{font-size:clamp(1.2rem,2.3vw,1.6rem);font-weight:700;color:var(--navy);line-height:1.4;border-left:5px solid var(--lime);padding-left:22px}
+
+/* ---------- pasos ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s}
+.step{display:flex;flex-direction:column;gap:10px}
+.step .num{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:1.1rem;color:#fff;background:var(--navy)}
+.step h3{font-size:.88rem;letter-spacing:.04em}
+.step p{color:var(--muted);font-size:.9rem}
+
+/* ---------- formularios ---------- */
+.form-card{background:var(--bg);border:1px solid var(--line);border-radius:22px;padding:32px;box-shadow:var(--shadow)}
+.form{display:grid;gap:16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label,.field .lbl{font-size:.8rem;font-weight:700;color:var(--navy)}
+.field input,.field select,.field textarea{font:inherit;font-size:.94rem;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);color:var(--text);width:100%;min-width:0}
+.field textarea{min-height:104px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(80,203,232,.35)}
+.field small{color:var(--muted);font-size:.78rem}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;font-size:.85rem;cursor:pointer;user-select:none;background:var(--bg)}
+.opt input{margin:0;accent-color:var(--forest)}
+.opt:has(input:checked){border-color:var(--forest);background:var(--soft-green);color:var(--forest);font-weight:600}
+.form .btn{justify-self:start}
+.success{text-align:center;display:grid;gap:12px;justify-items:center;padding:24px 8px}
+.success .ic-c{--c:var(--forest)}
+.success h3{font-size:1rem}
+.success p{color:var(--muted);max-width:30em}
+.proto-tip{font-size:.74rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:12px;margin-top:4px}
+
+/* ---------- donar ---------- */
+.don-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:28px;align-items:start}
+.don-grid > *{min-width:0}
+.panel{background:var(--bg);border:1px solid var(--line);border-radius:22px;padding:30px;display:grid;gap:24px}
+.panel h3{font-size:.82rem;letter-spacing:.12em;margin-bottom:12px}
+.seg{display:inline-flex;flex-wrap:wrap;background:var(--soft);border-radius:999px;padding:4px;gap:4px}
+.seg button{border:0;background:transparent;font-weight:700;font-size:.84rem;padding:10px 18px;border-radius:999px;color:var(--muted);cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--bg);color:var(--navy);box-shadow:0 2px 10px -4px rgba(30,43,90,.4)}
+.amounts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.amt{font-weight:800;font-size:1.05rem;padding:16px 6px;border:2px solid var(--line);border-radius:14px;background:var(--bg);color:var(--navy);cursor:pointer;font-variant-numeric:tabular-nums}
+.amt:hover{border-color:var(--line-strong)}
+.amt[aria-pressed=true]{border-color:var(--orange);background:#FFF4E6}
+.custom{display:flex;align-items:center;gap:10px;margin-top:10px}
+.custom span{font-weight:700;color:var(--navy);white-space:nowrap}
+.custom input{font:inherit;padding:11px 14px;border:1.5px solid var(--line);border-radius:12px;width:100%;max-width:220px}
+.summary{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hh) + 20px);background:var(--navy);color:#fff;border-radius:22px;padding:28px;display:grid;gap:16px;overflow:hidden}
+.summary .eyebrow{color:var(--lime);margin:0}
+.summary .big{font-size:2.5rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.summary .big small{font-size:.4em;font-weight:700;color:var(--on-dark-muted)}
+.summary dl{margin:0;display:grid;gap:10px;font-size:.88rem}
+.summary dl div{display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(255,255,255,.14);padding-top:10px}
+.summary dt{color:var(--on-dark-muted)}
+.summary dd{margin:0;font-weight:700;text-align:right}
+.summary p{font-size:.86rem;color:var(--on-dark-muted)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.tab{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--bg);color:var(--navy);font-weight:700;font-size:.82rem;padding:10px 16px;border-radius:999px;cursor:pointer}
+.tab[aria-selected=true]{background:var(--navy);border-color:var(--navy);color:#fff}
+.tabpanel{display:grid;grid-template-columns:1fr 240px;gap:32px;align-items:start}
+.tabpanel.one{grid-template-columns:1fr}
+.tabpanel > *{min-width:0}
+.kv{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line);font-size:.92rem;flex-wrap:wrap}
+.kv span{color:var(--muted)}
+.kv b{color:var(--navy);display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.copy{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--soft);color:var(--navy);font-size:.72rem;font-weight:700;padding:5px 10px;border-radius:999px;cursor:pointer}
+.copy:hover{border-color:var(--navy)}
+.copy .i{width:13px;height:13px}
+.qr{aspect-ratio:1;width:100%;max-width:240px;border:2px dashed var(--line-strong);border-radius:18px;display:grid;place-items:center;align-content:center;gap:8px;text-align:center;color:var(--muted);font-size:.8rem;padding:16px;background:repeating-linear-gradient(45deg,var(--bg) 0 10px,var(--soft) 10px 20px)}
+.qr .i{width:44px;height:44px;color:var(--navy)}
+.campaign{display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;border:2px solid var(--fuchsia);border-radius:22px;padding:26px;background:#FFF2F6}
+.campaign > *{min-width:0}
+.campaign .ic-c{--c:var(--fuchsia)}
+.campaign h3{font-size:.95rem}
+.campaign p{color:var(--text);font-size:.92rem;margin-top:4px}
+.campaign .btn{background:var(--fuchsia);color:#fff}
+
+/* ---------- contacto ---------- */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:32px;align-items:start}
+.contact-grid > *{min-width:0}
+.ccards{display:grid;gap:14px}
+.ccard{display:flex;gap:16px;align-items:flex-start;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.ccard > div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.ccard h3{font-size:.76rem;letter-spacing:.14em;color:var(--muted)}
+.ccard .val{font-weight:700;color:var(--navy);font-size:1.02rem;user-select:all;overflow-wrap:anywhere}
+.ccard .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+
+/* ---------- footer ---------- */
+.footer{background:var(--navy-deep);color:var(--on-dark-muted);padding-top:64px;font-size:.9rem}
+.f-grid{display:grid;grid-template-columns:1.4fr 1fr 1.1fr 1.2fr;gap:40px}
+.f-grid > *{min-width:0}
+.f-logo{display:inline-flex;align-items:center;gap:10px;background:#fff;border-radius:16px;padding:12px 16px;text-decoration:none}
+.f-logo img{height:44px;width:auto}
+.f-logo .brand-txt small{display:block}
+.footer .tagline{margin-top:18px;max-width:22em;line-height:1.6}
+.footer h4{color:#fff;font-size:.76rem;letter-spacing:.16em;margin-bottom:16px}
+.footer ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.footer a{color:var(--on-dark-muted);text-decoration:none}
+.footer a:hover{color:#fff}
+.f-contact li{display:flex;gap:10px;align-items:flex-start}
+.f-contact .i{width:17px;height:17px;color:var(--lime);margin-top:3px}
+.socials{display:flex;gap:10px;margin-top:20px}
+.socials a{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);color:#fff}
+.socials a:hover{background:rgba(255,255,255,.18)}
+.socials .i{width:18px;height:18px}
+.f-bottom{border-top:1px solid rgba(255,255,255,.12);margin-top:52px;padding-block:20px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;font-size:.8rem}
+.f-bottom nav{display:flex;flex-wrap:wrap;gap:18px}
+
+/* ---------- flotantes ---------- */
+.fab{position:fixed;z-index:45;display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;text-decoration:none;font-weight:700;box-shadow:0 12px 26px -12px rgba(30,43,90,.6)}
+.fab-wa{right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;justify-content:center;background:var(--forest);color:#fff}
+.fab-wa .i{width:26px;height:26px}
+.fab-notes{left:calc(18px + env(safe-area-inset-left,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));background:var(--bg);color:var(--navy);border:1px solid var(--line);border-radius:999px;padding:10px 16px;font-size:.78rem}
+.fab-notes[aria-pressed=true]{background:#FFF6D9;border-color:#C99A00}
+.fab-notes .i{width:17px;height:17px}
+
+/* ---------- responsive ---------- */
+@media (max-width:1000px){
+  .prog-grid{grid-template-columns:repeat(2,1fr)}
+  .pillars-grid{grid-template-columns:repeat(2,1fr)}
+  .pillar + .pillar{border-left:0}
+  .pillar:nth-child(even){border-left:1px solid rgba(255,255,255,.12)}
+  .pillar:nth-child(n+3){border-top:1px solid rgba(255,255,255,.12)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(3){border-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .org-prog{grid-template-columns:repeat(2,1fr)}
+  .f-grid{grid-template-columns:1fr 1fr}
+  .line-block{grid-template-columns:1fr;gap:24px}
+  .line-info{position:static}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .don-grid{grid-template-columns:1fr}
+  .summary{position:static}
+}
+@media (max-width:860px){
+  .hero-grid,.split,.proj-grid,.contact-grid,.cause{grid-template-columns:1fr}
+  .hero-grid{gap:8px}
+  .hero-copy{padding-bottom:28px}
+  .hero-photo{max-width:440px;width:100%;justify-self:center}
+  .split{gap:32px}
+  .news-grid{grid-template-columns:1fr 1fr}
+  .cards{--cols:2!important}
+  .gallery{grid-template-columns:1fr 1fr}
+  .cause-quote{padding-left:max(20px,env(safe-area-inset-left,0px));margin-left:0}
+  .cause-cta{padding-left:max(20px,env(safe-area-inset-left,0px))}
+  .cta-band{grid-template-columns:1fr;padding:32px 26px}
+  .tabpanel{grid-template-columns:1fr}
+  .campaign{grid-template-columns:auto 1fr}
+  .campaign .btn{grid-column:1/-1;justify-self:start}
+  .proj-grid .ph{max-width:420px}
+}
+@media (max-width:760px){
+  .org-areas{grid-template-columns:1fr;padding-top:0;gap:18px}
+  .org-areas::before{display:none}
+  .org-area::before{top:-18px;height:18px}
+  .org-area:first-child::before{top:0;height:0}
+  .org-area:last-child::after{bottom:-24px;height:24px}
+  .org-areas{margin-top:0}
+}
+@media (max-width:620px){
+  .sec{padding-block:56px}
+  .prog-grid,.news-grid,.proj-cards,.mv,.row2,.steps,.org-prog,.f-grid{grid-template-columns:1fr}
+  .cards{--cols:1!important}
+  .pillars-grid{grid-template-columns:1fr}
+  .pillar:nth-child(even){border-left:0}
+  .pillar + .pillar{border-top:1px solid rgba(255,255,255,.12)}
+  .amounts{grid-template-columns:repeat(2,1fr)}
+  .panel,.form-card{padding:22px}
+  .gallery{grid-template-columns:1fr}
+  .stat{padding:22px 18px}
+  .fab-notes .lbl{display:none}
+  .fab-notes{padding:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.2-4.4-9-8.8C1.7 8 3.7 4.8 7 4.8c2 0 3.4 1 5 3 1.6-2 3-3 5-3 3.3 0 5.3 3.2 4 6.4C19.2 15.6 12 20 12 20z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 2.8v5.6c0 4.6-3.2 8.4-7.5 9.6-4.3-1.2-7.5-5-7.5-9.6V5.8z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M3.5 5.5c2.8-1 5.6-.7 8.5 1v13c-2.9-1.7-5.7-2-8.5-1z"/><path d="M20.5 5.5c-2.8-1-5.6-.7-8.5 1v13c2.9-1.7 5.7-2 8.5-1z"/></symbol>
+    <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12C12 8 9.5 5.5 4.5 5.5c0 4 2.5 6.5 7.5 6.5z"/><path d="M12 10c0-3.6 2.3-6 7.5-6 0 4-2.6 6-7.5 6z"/></symbol>
+    <symbol id="i-handheart" viewBox="0 0 24 24"><path d="M2.5 14.5h3.2l3.6 2.6h5.2a1.9 1.9 0 0 0 0-3.8h-3"/><path d="M5.7 14.5v6H2.5"/><path d="M9.3 20.5h7.4l4.8-4.3a1.7 1.7 0 0 0-2.3-2.5l-3.4 2.4"/><path d="M15.5 9.8s-3-1.8-3-4a1.8 1.8 0 0 1 3-1.3 1.8 1.8 0 0 1 3 1.3c0 2.2-3 4-3 4z"/></symbol>
+    <symbol id="i-family" viewBox="0 0 24 24"><circle cx="8" cy="7" r="2.6"/><circle cx="16.5" cy="8.5" r="2.1"/><path d="M3 20v-1.5A5 5 0 0 1 13 18.5V20"/><path d="M14 13.6a4 4 0 0 1 6.5 3.1V20"/></symbol>
+    <symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.4 2.7 3 6 3s6-1.6 6-3v-5"/><path d="M22 9v5.5"/></symbol>
+    <symbol id="i-cross" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M6.5 8.5h11"/></symbol>
+    <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M3 11.5h18a9 9 0 0 1-18 0z"/><path d="M8 8c0-1.4 1-1.8 1-3.2"/><path d="M12 8c0-1.4 1-1.8 1-3.2"/><path d="M16 8c0-1.4 1-1.8 1-3.2"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12.5h4l2.2-5 4 10 2.2-5H21"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 11L12 4l8.5 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></symbol>
+    <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 14c1 1.4 2.1 2 3.5 2s2.5-.6 3.5-2"/><path d="M9 9.5h.01M15 9.5h.01"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6.5v18h11V6.5z"/><path d="M14 3v3.5h3.5"/><path d="M9.5 12.5h5M9.5 16h5"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 3.5h3.5l2 5-2.4 1.6a11 11 0 0 0 5.8 5.8l1.6-2.4 5 2V19a2 2 0 0 1-2 2A17.5 17.5 0 0 1 3 5.5a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6.5L20.5 7"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.1 7-11.7a7 7 0 0 0-14 0C5 14.9 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="12" height="12" rx="2"/><path d="M15.5 8.5V5a1.5 1.5 0 0 0-1.5-1.5H5A1.5 1.5 0 0 0 3.5 5v9A1.5 1.5 0 0 0 5 15.5h3.5"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="6" height="6" rx="1"/><rect x="14.5" y="3.5" width="6" height="6" rx="1"/><rect x="3.5" y="14.5" width="6" height="6" rx="1"/><path d="M14.5 14.5h2.5v2.5M20.5 14.5v.01M14.5 20.5h2.5M20.5 18v2.5H19"/></symbol>
+    <symbol id="i-bank" viewBox="0 0 24 24"><path d="M3 9.5L12 4l9 5.5"/><path d="M5 10v7.5M9.7 10v7.5M14.3 10v7.5M19 10v7.5"/><path d="M3 20.5h18"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.4 2.6 3.7 5.6 3.7 9s-1.3 6.4-3.7 9c-2.4-2.6-3.7-5.6-3.7-9S9.6 5.6 12 3z"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 7.5L12 3.5l8.5 4v9L12 20.5l-8.5-4z"/><path d="M3.5 7.5L12 11.5l8.5-4M12 11.5v9"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-hands" viewBox="0 0 24 24"><path d="M2.5 12.5l4-4 3.5 1.8 2.5-1.8 3.5.8 5.5 4.7"/><path d="M6.5 8.5l-4 4 5.5 5.5a1.8 1.8 0 0 0 2.5 0"/><path d="M10 10.3l3.8 3.8a1.6 1.6 0 0 1-2.3 2.3l-1-1"/><path d="M13.8 14.1l1.5 1.5a1.6 1.6 0 0 0 2.3-2.3"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12.5H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14.5 4.5l5 5-2.5 2.5-5-5z"/><path d="M12 7l-8.5 8.5v3.5h3.5L15.5 10.5"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5v1.5A3.5 3.5 0 0 0 8.5 11M16 6h3v1.5a3.5 3.5 0 0 1-3.5 3.5"/><path d="M12 13v4M8.5 20.5h7M10 17h4v3.5h-4z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20v-1a6 6 0 0 1 12 0v1"/><path d="M19 8v6M16 11h6"/></symbol>
+    <symbol id="i-badge" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2"/><circle cx="9" cy="11" r="2.2"/><path d="M5.8 16.5a3.4 3.4 0 0 1 6.4 0M14 10h4M14 13.5h4"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2.5h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M3.6 20.4l1.2-4.1A8.6 8.6 0 1 1 8 19.3z"/><path d="M9 8.3c-.3 1.4.3 3 1.6 4.4 1.4 1.4 3 2.1 4.5 1.8l.8-1.4-1.9-1-1 .8a5 5 0 0 1-2.3-2.2l.8-1-1-1.9z"/></symbol>
+    <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M14 8.5h2.5V5H14a3.5 3.5 0 0 0-3.5 3.5V11H8v3.5h2.5V21H14v-6.5h2.5l.5-3.5h-3V9a.5.5 0 0 1 .5-.5z"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.3 6.7h.01"/></symbol>
+    <symbol id="i-youtube" viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10.2 9.3v5.4l4.6-2.7z"/></symbol>
+  </defs>
+</svg>
+
+<div id="app">
+<header class="site-header">
+  <div class="wrap hdr">
+    <a class="brand" href="#inicio" aria-label="Fundación Refugio Esperanza, inicio">
+      <img src="data:image/png;base64,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" alt="" width="75" height="44">
+      <span class="brand-txt"><small>FUNDACIÓN</small><b>Refugio Esperanza</b></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="#inicio" data-nav="inicio">Inicio</a>
+      <a href="#quienes-somos" data-nav="quienes-somos">Quiénes somos</a>
+      <a href="#programas" data-nav="programas">Programas</a>
+      <a href="#impacto" data-nav="impacto">Impacto</a>
+      <a href="#transparencia" data-nav="transparencia">Transparencia</a>
+      <a href="#participa" data-nav="participa">Participa</a>
+      <a href="#contacto" data-nav="contacto">Contacto</a>
+    </nav>
+    <a class="btn btn-orange hdr-cta" href="#donar" data-nav="donar"><span class="lbl">Dona ahora</span><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg></a>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= INICIO ================= -->
+<section class="view" data-view="inicio">
+  <div class="hero">
+    <svg class="arch-deco" viewBox="0 0 520 340" aria-hidden="true"><path d="M30 330C40 220 120 110 258 22"/><path d="M490 330C480 220 400 110 262 22"/><path d="M86 330C96 240 160 150 258 92"/><path d="M434 330C424 240 360 150 262 92"/></svg>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1>Creamos <span class="hl-lime">oportunidades,</span> sembramos <span class="hl-lime">esperanza</span> y <span class="hl-sky">transformamos vidas.</span></h1>
+        <div class="note-row"><span class="note">Frase institucional oficial · Manual XII</span><span class="note">Montserrat · títulos en MAYÚSCULAS, textos en minúsculas · Manual IV</span></div>
+        <p class="lead">Trabajamos con niños, niñas, adolescentes, jóvenes y familias para que alcancen su máximo potencial.</p>
+        <div class="btns">
+          <a class="btn btn-green" href="#programas"><svg class="i" aria-hidden="true"><use href="#i-heart"/></svg>Conoce nuestros programas</a>
+          <a class="btn btn-ghost" href="#participa">¿Cómo puedes ayudar?</a>
+        </div>
+      </div>
+      <div class="hero-photo"><figure class="ph" data-file="team-mejorado-1.jpg" data-tone="sky" data-alt="Niñas y niños de la fundación"></figure></div>
+    </div>
+  </div>
+  <div class="pillars">
+    <div class="wrap pillars-grid">
+      <div class="pillar"><span class="ic-c c-lime"><svg class="i"><use href="#i-shield"/></svg></span><div><h3>Protegemos</h3><p>Los derechos de la niñez y sus familias.</p></div></div>
+      <div class="pillar"><span class="ic-c c-sky"><svg class="i"><use href="#i-book"/></svg></span><div><h3>Formamos</h3><p>Para la vida, la educación y el trabajo.</p></div></div>
+      <div class="pillar"><span class="ic-c c-forest"><svg class="i"><use href="#i-sprout"/></svg></span><div><h3>Desarrollamos</h3><p>Potencial y habilidades para el futuro.</p></div></div>
+      <div class="pillar"><span class="ic-c c-orange"><svg class="i"><use href="#i-handheart"/></svg></span><div><h3>Transformamos</h3><p>Comunidades con amor, fe y compromiso.</p></div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Nuestros programas</h2><span class="rule"></span>
+        <p>Cuatro líneas de acción y seis centros que acompañan cada etapa de la vida, desde la primera infancia hasta la universidad.</p>
+        <div class="note-row" style="justify-content:center"><span class="note">Estructura del organigrama oficial · color por programa · Manual VII</span></div>
+      </div>
+      <div class="prog-grid" id="home-progs"></div>
+    </div>
+  </div>
+
+  <div class="sec soft">
+    <div class="wrap split">
+      <figure class="ph arch" data-file="mejoradoo1.jpg" data-tone="forest" data-alt="Actividades en el CDI"></figure>
+      <div>
+        <span class="eyebrow">Quiénes somos</span>
+        <h2 style="font-size:clamp(1.45rem,2.7vw,2.1rem);font-weight:800">Juntos podemos construir un futuro mejor</h2>
+        <p class="lead" style="margin-top:16px">La Fundación Refugio Esperanza crea oportunidades para que cada persona alcance su máximo potencial. Con programas sociales, educativos y de acompañamiento integral, apoyamos a niños, jóvenes y familias con valores de dignidad, igualdad y fe cristiana.</p>
+        <ul class="checks-list">
+          <li><svg class="i"><use href="#i-check"/></svg>Impulsamos programas educativos y de desarrollo integral</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Brindamos oportunidades a niños y jóvenes para alcanzar su potencial</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Promovemos valores de dignidad, igualdad y fe cristiana</li>
+        </ul>
+        <div class="btns" style="margin-top:26px"><a class="btn btn-navy" href="#quienes-somos">Conoce nuestra misión <svg class="i"><use href="#i-arrow"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec tight">
+    <div class="wrap">
+      <div class="stats">
+        <div class="stat c-forest"><span class="dot"></span><b>6</b><span>centros y proyectos en cuatro líneas de acción</span></div>
+        <div class="stat c-lime"><span class="dot"></span><b>2</b><span>Centros de Desarrollo Infantil: El Torno y La Bélgica</span></div>
+        <div class="stat c-sky"><span class="dot"></span><b>4</b><span>talleres productivos de Productos de Esperanza</span></div>
+        <div class="stat c-orange"><span class="dot"></span><b><small>+</small>500</b><span>niñas, niños y adolescentes: la meta de nuestra visión</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cause">
+    <div class="cause-photo">
+      <figure class="ph" data-file="WhatsApp-Image-2026-01-30-at-13.49.55-2.jpeg" data-tone="navy" data-alt="Manos unidas"></figure>
+      <div class="cause-quote"><span class="qm" aria-hidden="true">“</span><p>Cada acción de hoy puede cambiar el mañana de muchos niños y familias.</p></div>
+    </div>
+    <div class="cause-cta">
+      <h2>Sé parte del cambio</h2>
+      <p>Tu apoyo siembra esperanza y transforma vidas.</p>
+      <div class="btns"><a class="btn btn-orange" href="#donar"><svg class="i"><use href="#i-heart"/></svg>Dona ahora</a><a class="btn btn-ghost" href="#participa">Ser voluntario</a></div>
+      <span class="note">Naranja = llamado a la acción (donar, participar) · Manual III</span>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2>Noticias y actividades</h2><span class="rule"></span><p>Lo que estamos viviendo en nuestros centros.</p></div>
+      <div class="news-grid" id="home-news"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUIÉNES SOMOS ================= -->
+<section class="view" data-view="quienes-somos" hidden>
+  <div class="phero">
+    <svg class="arch-deco" viewBox="0 0 520 340" aria-hidden="true"><path d="M30 330C40 220 120 110 258 22"/><path d="M490 330C480 220 400 110 262 22"/></svg>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Ruta"><a href="#inicio">Inicio</a><span>/</span><span>Quiénes somos</span></nav>
+      <h1>Protegemos, formamos y <span class="hl-lime">transformamos vidas</span></h1>
+      <p class="lead">Somos una organización que crea oportunidades con amor, fe y compromiso social para niños, niñas, adolescentes, jóvenes y familias en Santa Cruz, Bolivia.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow">Esencia institucional</span>
+        <h2 style="font-size:clamp(1.4rem,2.6vw,2rem);font-weight:800">Lo que nos mueve</h2>
+        <p class="lead" style="margin-top:16px">La Fundación Refugio Esperanza es una organización que protege, forma y transforma vidas, creando oportunidades con amor, fe y compromiso social.</p>
+        <p class="concept" style="margin-top:28px">Protegemos vidas, cultivamos esperanza y desarrollamos potencial.</p>
+        <div class="note-row"><span class="note">Concepto central · Manual I</span></div>
+      </div>
+      <figure class="ph arch" data-file="LISTA.jpg" data-tone="forest" data-alt="Equipo y niños del hogar"></figure>
+    </div>
+  </div>
+
+  <div class="sec soft">
+    <div class="wrap split">
+      <div class="logo-card"><img src="data:image/png;base64,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" alt="Logo de la Fundación Refugio Esperanza" width="450" height="300"></div>
+      <div>
+        <span class="eyebrow">Nuestro símbolo</span>
+        <h2 style="font-size:clamp(1.4rem,2.6vw,2rem);font-weight:800">Un logo que cuenta lo que hacemos</h2>
+        <div class="cards" style="--cols:1;margin-top:22px;gap:12px">
+          <div class="card head-row"><span class="ic-s"><svg class="i"><use href="#i-hands"/></svg></span><div><h3>Manos</h3><p>Protección, cuidado y acompañamiento.</p></div></div>
+          <div class="card head-row"><span class="ic-s"><svg class="i"><use href="#i-family"/></svg></span><div><h3>Personas</h3><p>Comunidad y desarrollo humano.</p></div></div>
+          <div class="card head-row"><span class="ic-s"><svg class="i"><use href="#i-sprout"/></svg></span><div><h3>Planta</h3><p>Crecimiento, esperanza y futuro.</p></div></div>
+        </div>
+        <div class="process" aria-label="Proceso"><b>Cuidar</b><svg class="i"><use href="#i-arrow"/></svg><b>Formar</b><svg class="i"><use href="#i-arrow"/></svg><b>Hacer crecer</b></div>
+        <div class="note-row"><span class="note">Logo siempre sobre fondo blanco o claro, sin cambiar colores · Manual X</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2>Nuestros valores</h2><span class="rule"></span></div>
+      <div class="cards" style="--cols:3">
+        <div class="card"><span class="ic-c c-forest"><svg class="i"><use href="#i-heart"/></svg></span><h3>Amor y compromiso social</h3><p>Acogemos a cada persona con cercanía y nos comprometemos con su desarrollo de largo plazo.</p></div>
+        <div class="card"><span class="ic-c c-navy"><svg class="i"><use href="#i-cross"/></svg></span><h3>Fe cristiana</h3><p>Acompañamos a cada niño y joven a descubrir su identidad, su propósito y un carácter sólido.</p></div>
+        <div class="card"><span class="ic-c c-sky"><svg class="i"><use href="#i-family"/></svg></span><h3>Dignidad e igualdad</h3><p>Reconocemos el valor de cada vida y defendemos los derechos de la niñez y sus familias.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec soft">
+    <div class="wrap">
+      <div class="sec-head"><h2>Organigrama de la fundación</h2><span class="rule"></span><p>Así nos organizamos para cuidar cada programa. Toca un centro para conocerlo.</p></div>
+      <div class="org">
+        <div class="org-node top">Asamblea General</div><span class="org-link"></span>
+        <div class="org-node">Directorio</div><span class="org-link"></span>
+        <div class="org-node">Representante Legal</div><span class="org-link"></span>
+        <div class="org-node">Dirección Ejecutiva</div><span class="org-link"></span>
+        <div class="org-areas">
+          <div class="org-area"><div class="org-box">Área de Administración</div><div class="org-sub">Secretaría</div></div>
+          <div class="org-area"><div class="org-box">Área de Recaudación de Fondos</div></div>
+          <div class="org-area"><div class="org-box">Área de Marketing y Comunicación</div></div>
+          <div class="org-area"><div class="org-box prog">Área de Programas</div></div>
+        </div>
+        <div class="org-prog" id="org-prog"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <div class="cta-band">
+        <svg class="arch-deco" viewBox="0 0 520 340" aria-hidden="true"><path d="M30 330C40 220 120 110 258 22"/><path d="M490 330C480 220 400 110 262 22"/></svg>
+        <div><h2>Juntos desarrollamos el máximo potencial</h2><p>Súmate como padrino, voluntario o aliado y acompaña a una niña, un niño o una familia en su camino.</p></div>
+        <div class="btns"><a class="btn btn-orange" href="#donar"><svg class="i"><use href="#i-heart"/></svg>Dona ahora</a><a class="btn btn-ghost" href="#participa">Participa</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROGRAMAS ================= -->
+<section class="view" data-view="programas" hidden>
+  <div class="phero">
+    <svg class="arch-deco" viewBox="0 0 520 340" aria-hidden="true"><path d="M30 330C40 220 120 110 258 22"/><path d="M490 330C480 220 400 110 262 22"/></svg>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Ruta"><a href="#inicio">Inicio</a><span>/</span><span>Programas</span></nav>
+      <h1>Cada niño merece una <span class="hl-lime">oportunidad</span></h1>
+      <p class="lead">Nuestro trabajo se organiza en cuatro líneas de acción. Cada una reúne centros y proyectos con un propósito claro.</p>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="wrap" id="lines"></div>
+  </div>
+</section>
+
+<!-- ================= PROYECTO (detalle) ================= -->
+<section class="view" data-view="proyecto" hidden>
+  <div id="proj"></div>
+</section>
+
+<!-- ================= IMPACTO ================= -->
+<section class="view" data-view="impacto" hidden>
+  <div class="phero">
+    <svg class="arch-deco" viewBox="0 0 520 340" aria-hidden="true"><path d="M30 330C40 220 120 110 258 22"/><path d="M490 330C480 220 400 110 262 22"/></svg>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Ruta"><a href="#inicio">Inicio</a><span>/</span><span>Impacto</span></nav>
+      <h1>Transformación <span class="hl-lime">visible</span></h1>
+      <p class="lead">Historias, logros y resultados que muestran cómo tu apoyo se convierte en vidas restauradas.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2>Logros de este año</h2><span class="rule"></span></div>
+      <div class="stats">
+        <div class="stat c-forest"><span class="dot"></span><b>1</b><span>joven graduado como chef profesional</span></div>
+        <div class="stat c-lime"><span class="dot"></span><b>3</b><span>jóvenes se gradúan de secundaria en diciembre</span></div>
+        <div class="stat c-sky"><span class="dot"></span><b>2.º</b><span>lugar en la Copa Planeta: subcampeones de fútbol</span></div>
+        <div class="stat c-orange"><span class="dot"></span><b><small>+</small>130</b><span>participantes de América Latina y África en el Programa de Transición Integrada</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec soft">
+    <div class="wrap">
+      <div class="sec-head"><h2>Indicadores de gestión</h2><span class="rule"></span><p>Espacio para las cifras anuales de cada programa.</p><div class="note-row" style="justify-content:center"><span class="note">Completar con datos reales de gestión 2026 antes de publicar</span></div></div>
+      <div class="stats">
+        <div class="stat c-lime"><span class="dot"></span><b>—</b><span>niñas y niños atendidos en los CDI</span><span class="todo" style="margin-top:12px">Por completar</span></div>
+        <div class="stat c-forest"><span class="dot"></span><b>—</b><span>niñas, niños y jóvenes en el Albergue</span><span class="todo" style="margin-top:12px">Por completar</span></div>
+        <div class="stat c-sky"><span class="dot"></span><b>—</b><span>familias acompañadas</span><span class="todo" style="margin-top:12px">Por completar</span></div>
+        <div class="stat c-orange"><span class="dot"></span><b>—</b><span>voluntarios activos</span><span class="todo" style="margin-top:12px">Por completar</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec t-forest">
+    <div class="wrap">
+      <div class="sec-head"><h2>Vidas transformadas</h2><span class="rule"></span><p>Compartimos estas historias reservando los nombres para proteger la identidad de nuestros niños.</p></div>
+      <div class="cards" style="--cols:2" id="impact-stories"></div>
+    </div>
+  </div>
+
+  <div class="sec soft">
+    <div class="wrap">
+      <div class="sec-head"><h2>Lo que estamos viviendo</h2><span class="rule"></span></div>
+      <div class="cards" style="--cols:3" id="impact-logros"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2>Noticias</h2><span class="rule"></span></div>
+      <div class="news-grid" id="impact-news"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRANSPARENCIA ================= -->
+<section class="view" data-view="transparencia" hidden>
+  <div class="phero">
+    <svg class="arch-deco" viewBox="0 0 520 340" aria-hidden="true"><path d="M30 330C40 220 120 110 258 22"/><path d="M490 330C480 220 400 110 262 22"/></svg>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Ruta"><a href="#inicio">Inicio</a><span>/</span><span>Transparencia</span></nav>
+      <h1>Transparencia que <span class="hl-sky">genera confianza</span></h1>
+      <p class="lead">La confianza se construye mostrando resultados. Aquí compartimos cómo trabajamos, cómo nos organizamos y la documentación que respalda nuestra labor.</p>
+      <div class="note-row"><span class="note">Azul = confianza para donantes · Manual IX</span></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2>Claros en todo lo que hacemos</h2><span class="rule"></span><p>Cada donación es un acto de confianza, y la honramos con responsabilidad.</p></div>
+      <div class="cards" style="--cols:3">
+        <div class="card"><span class="ic-c c-sky"><svg class="i"><use href="#i-eye"/></svg></span><h3>Claridad</h3><p>Comunicamos de forma abierta el uso de los recursos y el avance de cada proyecto.</p></div>
+        <div class="card"><span class="ic-c c-navy"><svg class="i"><use href="#i-file"/></svg></span><h3>Rendición de cuentas</h3><p>Documentamos nuestras actividades y ponemos los reportes a disposición de quien los solicite.</p></div>
+        <div class="card"><span class="ic-c c-forest"><svg class="i"><use href="#i-check"/></svg></span><h3>Buen uso de recursos</h3><p>Cada aporte se destina a sostener nuestros programas sociales y educativos.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec soft">
+    <div class="wrap split" style="align-items:start">
+      <div>
+        <span class="eyebrow">Gobierno institucional</span>
+        <h2 style="font-size:clamp(1.4rem,2.6vw,2rem);font-weight:800">Cómo se toman las decisiones</h2>
+        <p class="lead" style="margin-top:16px">Nuestra estructura de gobierno asegura que cada decisión tenga respaldo y supervisión.</p>
+        <div class="org" style="width:min(300px,100%);margin-top:28px">
+          <div class="org-node top">Asamblea General</div><span class="org-link"></span>
+          <div class="org-node">Directorio</div><span class="org-link"></span>
+          <div class="org-node">Representante Legal</div><span class="org-link"></span>
+          <div class="org-node">Dirección Ejecutiva</div>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow">Respaldo legal</span>
+        <h2 style="font-size:clamp(1.4rem,2.6vw,2rem);font-weight:800">Una fundación formal y confiable</h2>
+        <div class="cards" style="--cols:1;gap:12px;margin-top:22px">
+          <div class="card head-row"><span class="ic-s"><svg class="i"><use href="#i-badge"/></svg></span><div><h3>Personería jurídica</h3><p>Registrada como fundación sin fines de lucro en Bolivia.</p><span class="todo">Nº de registro por completar</span></div></div>
+          <div class="card head-row"><span class="ic-s"><svg class="i"><use href="#i-shield"/></svg></span><div><h3>Representante legal acreditado</h3><p>Con poder vigente para actuar en nombre de la fundación.</p></div></div>
+          <div class="card head-row"><span class="ic-s"><svg class="i"><use href="#i-globe"/></svg></span><div><h3>Donaciones del exterior</h3><p>Habilitación para recibir donaciones internacionales conforme a la ley.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2>Reportes e informes</h2><span class="rule"></span><p>Por respeto a la privacidad no publicamos datos sensibles, pero compartimos la documentación con donantes y aliados que la soliciten.</p></div>
+      <div class="cards" style="--cols:2" id="docs"></div>
+    </div>
+  </div>
+
+  <div class="sec soft">
+    <div class="wrap">
+      <div class="sec-head"><h2>¿A dónde va tu donación?</h2><span class="rule"></span><p>Cada boliviano que aportas tiene un destino concreto.</p></div>
+      <div class="cards" style="--cols:3" id="destinos-t"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <div class="cta-band">
+        <svg class="arch-deco" viewBox="0 0 520 340" aria-hidden="true"><path d="M30 330C40 220 120 110 258 22"/><path d="M490 330C480 220 400 110 262 22"/></svg>
+        <div><h2>¿Tienes preguntas sobre nuestra gestión?</h2><p>Escríbenos y con gusto te compartimos la información que necesites.</p></div>
+        <div class="btns"><a class="btn btn-orange" href="#contacto" data-asunto="Transparencia">Solicitar información</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PARTICIPA ================= -->
+<section class="view" data-view="participa" hidden>
+  <div class="phero">
+    <svg class="arch-deco" viewBox="0 0 520 340" aria-hidden="true"><path d="M30 330C40 220 120 110 258 22"/><path d="M490 330C480 220 400 110 262 22"/></svg>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Ruta"><a href="#inicio">Inicio</a><span>/</span><span>Participa</span></nav>
+      <h1>Tu tiempo también <span class="hl-lime">siembra esperanza</span></h1>
+      <p class="lead">Invitamos a la comunidad, iglesias, empresas e instituciones de Bolivia y del exterior a formar parte de esta labor. No necesitas tenerlo todo, solo querer ayudar.</p>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2>Formas de colaborar</h2><span class="rule"></span></div>
+      <div class="cards" style="--cols:4" id="ways"></div>
+    </div>
+  </div>
+
+  <div class="sec soft">
+    <div class="wrap">
+      <div class="sec-head"><h2>Áreas de voluntariado</h2><span class="rule"></span><p>Elige según tu tiempo y tus talentos. Toda ayuda cuenta, desde una tarde al mes hasta un compromiso semanal.</p></div>
+      <div class="cards" style="--cols:3" id="areas"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap">
+      <div class="sec-head"><h2>¿Cómo funciona?</h2><span class="rule"></span></div>
+      <div class="steps">
+        <div class="step"><span class="num">1</span><h3>Postúlate</h3><p>Llena el formulario con tus datos y el área que te interesa.</p></div>
+        <div class="step"><span class="num">2</span><h3>Te contactamos</h3><p>Conversamos contigo para conocerte y resolver tus dudas.</p></div>
+        <div class="step"><span class="num">3</span><h3>Capacitación</h3><p>Te orientamos sobre la fundación, los proyectos y tu rol.</p></div>
+        <div class="step"><span class="num">4</span><h3>Empiezas a servir</h3><p>Te integras al equipo y comienzas a sembrar esperanza.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec soft t-forest" id="productos">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow">Sostenibilidad</span>
+        <h2 style="font-size:clamp(1.4rem,2.6vw,2rem);font-weight:800">Productos de Esperanza</h2>
+        <p class="lead" style="margin-top:16px">Nuestros talleres productivos son espacios formativos y escuelas de negocios para los jóvenes del Albergue. Lo que producen se comercializa con la marca Productos de Esperanza.</p>
+        <p style="margin-top:14px;color:var(--muted)">Los ingresos apoyan la sostenibilidad del hogar y financian el fondo de becas y ahorro para la vida independiente de nuestros jóvenes.</p>
+        <div class="chips" style="margin-top:22px"><span class="chip c-forest">Carpintería</span><span class="chip c-lime">Panadería</span><span class="chip c-sky">Costura</span><span class="chip c-orange">Decoración</span></div>
+        <div class="btns" style="margin-top:24px"><button class="btn btn-navy" data-scroll="vol-form" data-tipo="Comprar Productos de Esperanza">Quiero hacer un pedido</button></div>
+      </div>
+      <figure class="ph arch" data-file="JOVENES-2.jpg" data-tone="forest" data-alt="Jóvenes en los talleres"></figure>
+    </div>
+  </div>
+
+  <div class="sec" id="vol-form">
+    <div class="wrap split" style="align-items:start">
+      <div>
+        <span class="eyebrow">Da el primer paso</span>
+        <h2 style="font-size:clamp(1.4rem,2.6vw,2rem);font-weight:800">Súmate a la misión</h2>
+        <p class="lead" style="margin-top:16px">Completa el formulario y nuestro equipo te escribirá para darte la bienvenida.</p>
+        <ul class="checks-list">
+          <li><svg class="i"><use href="#i-check"/></svg>Sin compromiso inicial: conversamos antes de que decidas</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Horarios flexibles: tú eliges cuánto tiempo puedes dar</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Constancia de servicio voluntario</li>
+        </ul>
+      </div>
+      <div class="form-card">
+        <form class="form" data-demo novalidate>
+          <div class="row2">
+            <div class="field"><label for="v-nombre">Nombre completo *</label><input id="v-nombre" name="nombre" required autocomplete="name"></div>
+            <div class="field"><label for="v-tel">Teléfono o WhatsApp *</label><input id="v-tel" name="tel" required inputmode="tel" autocomplete="tel"></div>
+          </div>
+          <div class="field"><label for="v-email">Correo electrónico *</label><input id="v-email" name="email" type="email" required autocomplete="email"></div>
+          <div class="field"><label for="v-tipo">¿Cómo quieres participar? *</label>
+            <select id="v-tipo" name="tipo" required>
+              <option>Voluntariado</option><option>Pasantía</option><option>Alianza o RSE (empresa o institución)</option><option>Programa de padrinos</option><option>Comprar Productos de Esperanza</option>
+            </select></div>
+          <div class="field"><span class="lbl">Disponibilidad</span>
+            <div class="opts">
+              <label class="opt"><input type="checkbox" id="v-d1"> Entre semana</label>
+              <label class="opt"><input type="checkbox" id="v-d2"> Fines de semana</label>
+              <label class="opt"><input type="checkbox" id="v-d3"> Eventos puntuales</label>
+              <label class="opt"><input type="checkbox" id="v-d4"> Remoto</label>
+            </div></div>
+          <div class="field"><label for="v-msg">Cuéntanos un poco de ti (opcional)</label><textarea id="v-msg" name="msg"></textarea></div>
+          <button class="btn btn-orange" type="submit">Enviar postulación <svg class="i"><use href="#i-arrow"/></svg></button>
+          <p class="proto-tip">En WordPress este formulario se conecta a WPForms o Contact Form 7.</p>
+        </form>
+        <div class="success" hidden><span class="ic-c"><svg class="i"><use href="#i-check"/></svg></span><h3>¡Gracias por sumarte!</h3><p data-msg>Recibimos tu postulación. Te escribiremos pronto.</p><button class="btn btn-line" data-reset>Enviar otra</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DONAR ================= -->
+<section class="view" data-view="donar" hidden>
+  <div class="phero">
+    <svg class="arch-deco" viewBox="0 0 520 340" aria-hidden="true"><path d="M30 330C40 220 120 110 258 22"/><path d="M490 330C480 220 400 110 262 22"/></svg>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Ruta"><a href="#inicio">Inicio</a><span>/</span><span>Donar</span></nav>
+      <h1>Tú puedes sembrar <span class="hl-lime">esperanza</span> hoy</h1>
+      <p class="lead">Tu apoyo crea futuro. Elige cuánto, cada cuánto y a qué programa quieres apoyar.</p>
+      <div class="note-row"><span class="note">Tono de marca: “Tú puedes sembrar esperanza hoy” en lugar de “Se solicita donación” · Manual V</span></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap don-grid">
+      <div class="panel">
+        <div>
+          <h3>1 · Tipo de aporte</h3>
+          <div class="seg" role="group" aria-label="Frecuencia">
+            <button type="button" data-freq="unico" aria-pressed="false">Aporte único</button>
+            <button type="button" data-freq="mensual" aria-pressed="true">Padrino mensual</button>
+          </div>
+        </div>
+        <div>
+          <h3>2 · Monto</h3>
+          <div class="amounts">
+            <button type="button" class="amt" data-amt="50">Bs 50</button>
+            <button type="button" class="amt" data-amt="100" aria-pressed="true">Bs 100</button>
+            <button type="button" class="amt" data-amt="250">Bs 250</button>
+            <button type="button" class="amt" data-amt="500">Bs 500</button>
+          </div>
+          <div class="custom"><label for="d-otro"><span>Otro monto</span></label><input id="d-otro" type="number" min="10" step="10" placeholder="Bs" inputmode="numeric"></div>
+        </div>
+        <div class="field">
+          <h3 style="margin-bottom:0">3 · Programa</h3>
+          <label class="sr" for="d-prog">Programa a apoyar</label>
+          <select id="d-prog"></select>
+        </div>
+      </div>
+      <aside class="summary" aria-live="polite">
+        <span class="eyebrow">Tu aporte</span>
+        <div class="big" id="s-amt">Bs 100 <small>/ mes</small></div>
+        <dl>
+          <div><dt>Tipo</dt><dd id="s-freq">Padrino mensual</dd></div>
+          <div><dt>Programa</dt><dd id="s-prog">Donde más se necesite</dd></div>
+          <div><dt>Método</dt><dd id="s-met">QR</dd></div>
+        </dl>
+        <p id="s-txt">Tu aporte mensual sostiene educación, alimentación y cuidado durante todo el año.</p>
+        <button class="btn btn-orange" data-scroll="metodos">Continuar <svg class="i"><use href="#i-arrow"/></svg></button>
+      </aside>
+    </div>
+  </div>
+
+  <div class="sec soft" id="metodos">
+    <div class="wrap">
+      <div class="sec-head left"><h2>Formas de donar</h2><span class="rule"></span></div>
+      <div class="panel">
+        <div>
+          <div class="tabs" role="tablist" aria-label="Método de pago">
+            <button class="tab" role="tab" id="t-qr" aria-controls="p-qr" aria-selected="true" data-met="qr"><svg class="i"><use href="#i-qr"/></svg>QR</button>
+            <button class="tab" role="tab" id="t-bo" aria-controls="p-bo" aria-selected="false" data-met="bo"><svg class="i"><use href="#i-bank"/></svg>Transferencia Bolivia</button>
+            <button class="tab" role="tab" id="t-ext" aria-controls="p-ext" aria-selected="false" data-met="ext"><svg class="i"><use href="#i-globe"/></svg>Desde el exterior</button>
+            <button class="tab" role="tab" id="t-esp" aria-controls="p-esp" aria-selected="false" data-met="esp"><svg class="i"><use href="#i-box"/></svg>En especie</button>
+          </div>
+          <div class="tabpanel" role="tabpanel" id="p-qr" aria-labelledby="t-qr">
+            <div>
+              <p class="lead">Escanea el código con la app de tu banco y escribe el monto elegido. Funciona con cualquier banco de Bolivia.</p>
+              <ul class="checks-list"><li><svg class="i"><use href="#i-check"/></svg>Abre tu app bancaria y elige “Pagar con QR”</li><li><svg class="i"><use href="#i-check"/></svg>Escanea el código y confirma el monto</li><li><svg class="i"><use href="#i-check"/></svg>Envíanos el comprobante abajo para tu certificado</li></ul>
+            </div>
+            <div class="qr"><svg class="i"><use href="#i-qr"/></svg><b style="color:var(--navy)">QR de la cuenta</b><span>Subir imagen del QR del banco</span></div>
+          </div>
+          <div class="tabpanel one" role="tabpanel" id="p-bo" aria-labelledby="t-bo" hidden>
+            <div>
+              <div class="kv"><span>Banco</span><b><span class="todo">Por completar</span></b></div>
+              <div class="kv"><span>Titular</span><b>Fundación Refugio Esperanza</b></div>
+              <div class="kv"><span>Cuenta Nº</span><b><span data-copy-src>000-0000000</span><button class="copy" data-copy><svg class="i"><use href="#i-copy"/></svg>Copiar</button></b></div>
+              <div class="kv"><span>Moneda</span><b>Bolivianos (Bs)</b></div>
+              <div class="kv"><span>NIT</span><b><span class="todo">Por completar</span></b></div>
+            </div>
+          </div>
+          <div class="tabpanel one" role="tabpanel" id="p-ext" aria-labelledby="t-ext" hidden>
+            <div>
+              <div class="kv"><span>Beneficiario</span><b>Fundación Refugio Esperanza</b></div>
+              <div class="kv"><span>Banco</span><b><span class="todo">Por completar</span></b></div>
+              <div class="kv"><span>SWIFT</span><b><span class="todo">Por completar</span></b></div>
+              <div class="kv"><span>Cuenta en USD</span><b><span class="todo">Por completar</span></b></div>
+              <p style="color:var(--muted);font-size:.9rem;margin-top:14px">También puedes apoyar desde el exterior con el Programa de Padrinos. La fundación está habilitada para recibir donaciones internacionales.</p>
+            </div>
+          </div>
+          <div class="tabpanel one" role="tabpanel" id="p-esp" aria-labelledby="t-esp" hidden>
+            <div>
+              <p class="lead">Recibimos donaciones en especie para el hogar y los centros.</p>
+              <div class="chips" style="margin-top:16px"><span class="chip c-forest">Alimentos no perecederos</span><span class="chip c-sky">Ropa en buen estado</span><span class="chip c-lime">Útiles escolares</span><span class="chip c-orange">Materiales de construcción</span></div>
+              <div class="kv" style="margin-top:18px"><span>Coordina la entrega por WhatsApp</span><b><span data-copy-src>+591 77397585</span><button class="copy" data-copy><svg class="i"><use href="#i-copy"/></svg>Copiar</button></b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="wrap split" style="align-items:start">
+      <div>
+        <span class="eyebrow">Confirma tu donación</span>
+        <h2 style="font-size:clamp(1.4rem,2.6vw,2rem);font-weight:800">Avísanos para agradecerte</h2>
+        <p class="lead" style="margin-top:16px">Después de tu transferencia, envíanos el comprobante. Te confirmamos la recepción y, si lo pides, te enviamos tu certificado de donación.</p>
+      </div>
+      <div class="form-card">
+        <form class="form" data-demo data-kind="donacion" novalidate>
+          <div class="row2">
+            <div class="field"><label for="c-nombre">Nombre completo *</label><input id="c-nombre" required autocomplete="name"></div>
+            <div class="field"><label for="c-contacto">WhatsApp o correo *</label><input id="c-contacto" required></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="c-monto">Monto (Bs) *</label><input id="c-monto" type="number" min="1" required inputmode="numeric"></div>
+            <div class="field"><label for="c-metodo">Método</label><select id="c-metodo"><option value="qr">QR</option><option value="bo">Transferencia Bolivia</option><option value="ext">Desde el exterior</option><option value="esp">En especie</option></select></div>
+          </div>
+          <div class="field"><label for="c-prog">Programa</label><select id="c-prog"></select></div>
+          <div class="field"><label for="c-file">Comprobante</label><input id="c-file" type="file" accept="image/*,.pdf"><small>Imagen o PDF de tu transferencia.</small></div>
+          <label class="opt" style="justify-self:start"><input type="checkbox" id="c-cert" checked> Quiero recibir mi certificado de donación</label>
+          <button class="btn btn-orange" type="submit">Enviar confirmación <svg class="i"><use href="#i-arrow"/></svg></button>
+          <p class="proto-tip">En WordPress este formulario se conecta a WPForms con subida de archivo.</p>
+        </form>
+        <div class="success" hidden><span class="ic-c"><svg class="i"><use href="#i-check"/></svg></span><h3>¡Gracias por sembrar esperanza!</h3><p data-msg>Recibimos tu confirmación.</p><button class="btn btn-line" data-reset>Enviar otra</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec soft">
+    <div class="wrap">
+      <div class="sec-head"><h2>¿A dónde va tu donación?</h2><span class="rule"></span></div>
+      <div class="cards" style="--cols:3" id="destinos-d"></div>
+      <div class="campaign" style="margin-top:28px">
+        <span class="ic-c"><svg class="i"><use href="#i-star"/></svg></span>
+        <div><h3>Espacio para campañas especiales</h3><p>Aquí se destaca una campaña puntual, por ejemplo una colecta de temporada, con su meta y fecha de cierre.</p><span class="note" style="margin-top:8px">Fucsia = campañas especiales · Manual III</span></div>
+        <a class="btn" href="#donar" data-scroll="metodos">Apoyar campaña</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACTO ================= -->
+<section class="view" data-view="contacto" hidden>
+  <div class="phero">
+    <svg class="arch-deco" viewBox="0 0 520 340" aria-hidden="true"><path d="M30 330C40 220 120 110 258 22"/><path d="M490 330C480 220 400 110 262 22"/></svg>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Ruta"><a href="#inicio">Inicio</a><span>/</span><span>Contacto</span></nav>
+      <h1>Hablemos</h1>
+      <p class="lead">¿Quieres conocer más sobre nuestros programas, colaborar o apoyar nuestras iniciativas? Escríbenos.</p>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="wrap contact-grid">
+      <div class="ccards">
+        <div class="ccard"><span class="ic-s"><svg class="i"><use href="#i-phone"/></svg></span><div><h3>Teléfono y WhatsApp</h3><span class="val" data-copy-src>+591 77397585</span><div class="row"><button class="copy" data-copy><svg class="i"><use href="#i-copy"/></svg>Copiar</button><a class="copy" href="https://wa.me/59177397585" target="_blank" rel="noopener"><svg class="i"><use href="#i-whatsapp"/></svg>Abrir WhatsApp</a></div></div></div>
+        <div class="ccard"><span class="ic-s"><svg class="i"><use href="#i-mail"/></svg></span><div><h3>Correo</h3><span class="val" data-copy-src>info@refugioesperanza.org</span><div class="row"><button class="copy" data-copy><svg class="i"><use href="#i-copy"/></svg>Copiar</button></div></div></div>
+        <div class="ccard"><span class="ic-s"><svg class="i"><use href="#i-pin"/></svg></span><div><h3>Ubicación</h3><span class="val">El Torno, Santa Cruz – Bolivia</span><div class="row"><a class="copy" href="https://maps.app.goo.gl/SaxntJn5f1yFihd19" target="_blank" rel="noopener"><svg class="i"><use href="#i-arrow"/></svg>Ver en Google Maps</a></div></div></div>
+        <div class="ccard"><span class="ic-s"><svg class="i"><use href="#i-clock"/></svg></span><div><h3>Horario de atención</h3><span class="todo">Por completar</span></div></div>
+      </div>
+      <div class="form-card">
+        <form class="form" data-demo novalidate>
+          <div class="row2">
+            <div class="field"><label for="ct-nombre">Nombre *</label><input id="ct-nombre" required autocomplete="name"></div>
+            <div class="field"><label for="ct-tel">Teléfono</label><input id="ct-tel" inputmode="tel" autocomplete="tel"></div>
+          </div>
+          <div class="field"><label for="ct-email">Correo electrónico *</label><input id="ct-email" type="email" required autocomplete="email"></div>
+          <div class="field"><label for="ct-asunto">Asunto</label><select id="ct-asunto"><option>Información general</option><option>Donaciones</option><option>Voluntariado</option><option>Alianzas</option><option>Transparencia</option><option>Otro</option></select></div>
+          <div class="field"><label for="ct-msg">Mensaje *</label><textarea id="ct-msg" required></textarea></div>
+          <button class="btn btn-orange" type="submit">Enviar mensaje <svg class="i"><use href="#i-arrow"/></svg></button>
+          <p class="proto-tip">En WordPress este formulario se conecta a Contact Form 7, que ya está traducido.</p>
+        </form>
+        <div class="success" hidden><span class="ic-c"><svg class="i"><use href="#i-check"/></svg></span><h3>Mensaje recibido</h3><p data-msg>Te responderemos pronto.</p><button class="btn btn-line" data-reset>Enviar otro</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap f-grid">
+    <div>
+      <a class="f-logo" href="#inicio"><img src="data:image/png;base64,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" alt="" width="75" height="44"><span class="brand-txt"><small>FUNDACIÓN</small><b>Refugio Esperanza</b></span></a>
+      <p class="tagline">Creamos oportunidades, sembramos esperanza y transformamos vidas.</p>
+      <div class="socials">
+        <a href="#contacto" aria-label="Facebook"><svg class="i"><use href="#i-facebook"/></svg></a>
+        <a href="#contacto" aria-label="Instagram"><svg class="i"><use href="#i-instagram"/></svg></a>
+        <a href="#contacto" aria-label="YouTube"><svg class="i"><use href="#i-youtube"/></svg></a>
+        <a href="https://wa.me/59177397585" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="i"><use href="#i-whatsapp"/></svg></a>
+      </div>
+      <div class="note-row"><span class="note">Logo sobre placa blanca: el manual no permite usarlo sobre fondos saturados · Manual X</span></div>
+    </div>
+    <div><h4>Enlaces</h4><ul><li><a href="#quienes-somos">Quiénes somos</a></li><li><a href="#programas">Programas</a></li><li><a href="#impacto">Impacto</a></li><li><a href="#transparencia">Transparencia</a></li><li><a href="#participa">Participa</a></li><li><a href="#donar">Donar</a></li></ul></div>
+    <div><h4>Centros</h4><ul id="f-progs"></ul></div>
+    <div><h4>Contacto</h4><ul class="f-contact"><li><svg class="i"><use href="#i-phone"/></svg>+591 77397585</li><li><svg class="i"><use href="#i-mail"/></svg>info@refugioesperanza.org</li><li><svg class="i"><use href="#i-pin"/></svg>El Torno, Santa Cruz – Bolivia</li></ul></div>
+  </div>
+  <div class="wrap f-bottom">
+    <span>© 2026 Fundación Refugio Esperanza. Todos los derechos reservados.</span>
+    <nav aria-label="Legal"><a href="https://refugioesperanza.org/terminos-y-condiciones/" target="_blank" rel="noopener">Términos y condiciones</a><a href="https://refugioesperanza.org/politica-de-privacidad/" target="_blank" rel="noopener">Política de privacidad</a></nav>
+  </div>
+</footer>
+
+<a class="fab fab-wa" href="https://wa.me/59177397585" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp"><svg class="i"><use href="#i-whatsapp"/></svg></a>
+<button class="fab fab-notes" id="notes-btn" aria-pressed="false"><svg class="i"><use href="#i-eye"/></svg><span class="lbl">Notas del manual</span></button>
+</div>
+
+<script>
+(function(){
+'use strict';
+const ic = (n) => '<svg class="i" aria-hidden="true"><use href="#i-' + n + '"/></svg>';
+const UPLOADS = 'https://refugioesperanza.org/wp-content/uploads/2026/03/';
+const ONSITE = /(^|\.)refugioesperanza\.org$/.test(location.hostname);
+
+/* ======== Datos (contenido real del sitio + organigrama) ======== */
+const LINES = {
+  proteccion:{name:'Protección y restitución de derechos de la niñez', full:'Desarrollo integral, protección y restitución de derechos de la niñez', icon:'shield', tone:'forest', desc:'Un hogar seguro y acompañamiento integral para niñas, niños y adolescentes en situación de orfandad, abandono o abuso, con seguimiento para restituir sus derechos.', projects:['albergue']},
+  comunidad:{name:'Desarrollo comunitario y fortalecimiento familiar', full:'Desarrollo comunitario y fortalecimiento familiar', icon:'family', tone:'lime', desc:'Centros de Desarrollo Infantil que acompañan a la niñez y a sus familias con educación, alimentación, salud y formación en valores.', projects:['cdi-el-torno','cdi-la-belgica']},
+  educacion:{name:'Educación y plan de vida', full:'Educación y plan de vida', icon:'cap', tone:'sky', desc:'Formación escolar, técnica y universitaria para que cada joven construya su plan de vida con autonomía y valores.', projects:['colegio-vida-y-luz','universidad-jada']},
+  espiritual:{name:'Formación espiritual y desarrollo del carácter', full:'Formación espiritual y desarrollo del carácter', icon:'cross', tone:'navy', desc:'Discipulado y formación bíblica para desarrollar un carácter cristiano sólido y un liderazgo de servicio.', projects:['seminario-jada']}
+};
+
+const PILLARS_CDI = {t:'cards', eyebrow:'Nuestro trabajo', title:'Cuatro pilares para su desarrollo', cols:4, items:[
+  {i:'book', h:'Educación', d:'Educación inicial y actividades formativas que estimulan el aprendizaje, la creatividad y la curiosidad.'},
+  {i:'bowl', h:'Alimentación', d:'Alimentación nutritiva y balanceada para que cada niña y niño crezca sano y con energía.'},
+  {i:'pulse', h:'Salud', d:'Cuidado y seguimiento de la salud de cada niña y niño.'},
+  {i:'star', h:'Formación en valores', d:'Valores de dignidad, igualdad y fe cristiana desde la primera infancia.'}
+]};
+
+const LOGROS = [
+  {i:'trophy', h:'Logros académicos', d:'Uno de nuestros jóvenes se graduó como chef profesional, y tres jóvenes se preparan para graduarse de secundaria en diciembre.'},
+  {i:'globe', h:'Formación internacional', d:'Nuestra coordinadora educativa representó al hogar en la convención de CAFO (Christian Alliance for Orphans), y participamos en el lanzamiento del Programa de Transición Integrada.'},
+  {i:'tool', h:'Talleres productivos', d:'Los jóvenes expusieron sus trabajos de carpintería ante aliados internacionales vía Zoom. El taller de costura impulsa proyectos textiles para su independencia.'},
+  {i:'star', h:'Deporte y recreación', d:'Nuestro equipo de fútbol fue subcampeón de la Copa Planeta. Organizamos jornadas de convivencia, picnics y un té de chicas para fortalecer la autoestima.'},
+  {i:'cross', h:'Liderazgo espiritual y servicio', d:'Jóvenes en etapa de transición enseñan a los más pequeños en la iglesia del hogar y lideran servicios de adoración.'},
+  {i:'bag', h:'Autosostenibilidad', d:'Realizamos una kermesse comunitaria con aves de nuestra propia granja. Vendimos todo y los fondos fueron al desarrollo integral de los niños.'}
+];
+
+const STORIES = [
+  {h:'De la vulnerabilidad al descubrimiento de su propósito', d:'Llegó a los 6 años junto a su hermana, remitidos por la Defensoría por una situación de abandono. Recibió un entorno seguro, acompañamiento pastoral, apoyo psicológico y talleres de oficios. Hoy es un niño alegre, destacado en el deporte y con gran talento en el taller de carpintería.'},
+  {h:'Un camino de sanidad, crecimiento y esperanza', d:'Llegó a los 6 años tras sufrir maltrato físico; era tan tímida que le costaba incluso saltar. Hoy, a sus 18 años, concluye la secundaria y una formación técnica, con la meta de empezar la universidad. Ama bailar y nos regala una sonrisa cada día.'}
+];
+
+const WAYS = [
+  {i:'heart', h:'Programa de padrinos', d:'Apoya el sostenimiento, la educación y la salud de los niños con un aporte recurrente, desde Bolivia o el exterior.', cta:'Ser padrino', href:'#donar', freq:'mensual'},
+  {i:'users', h:'Voluntariado y pasantías', d:'Suma tu tiempo y talento en apoyo escolar, talleres, salud, recreación y proyectos productivos.', cta:'Postular', scroll:'vol-form', tipo:'Voluntariado'},
+  {i:'hands', h:'Alianzas y RSE', d:'Convenios con empresas e instituciones para donaciones en especie, becas educativas o patrocinio de infraestructura.', cta:'Proponer alianza', scroll:'vol-form', tipo:'Alianza o RSE (empresa o institución)'},
+  {i:'bag', h:'Compra Productos de Esperanza', d:'Adquiere lo que producen nuestros talleres de panadería, carpintería y manualidades.', cta:'Ver productos', scroll:'productos'}
+];
+
+const AREAS = [
+  {i:'book', h:'Apoyo escolar', d:'Tareas, lectura y reforzamiento para niñas, niños y adolescentes.'},
+  {i:'tool', h:'Talleres', d:'Comparte un oficio o habilidad: computación, carpintería, costura, arte.'},
+  {i:'pulse', h:'Salud', d:'Profesionales de la salud que apoyan con controles y orientación.'},
+  {i:'star', h:'Recreación y deporte', d:'Jornadas de juego, deporte y convivencia que fortalecen la autoestima.'},
+  {i:'bag', h:'Proyectos productivos', d:'Apoyo en panadería, granja y comercialización de Productos de Esperanza.'},
+  {i:'badge', h:'Profesional voluntario', d:'¿Eres psicólogo, abogado, docente o comunicador? Aporta tu profesión por horas.'}
+];
+
+const DESTINOS = [
+  {i:'bowl', h:'Alimentación', d:'Comidas diarias nutritivas para las niñas y niños de los CDI y del Albergue.'},
+  {i:'book', h:'Educación', d:'Material escolar, reforzamiento académico y becas para jóvenes con potencial.'},
+  {i:'home', h:'Hogar y cuidado', d:'Servicios básicos, mantenimiento y acompañamiento integral en el hogar.'}
+];
+
+const DOCS = [
+  {h:'Memoria anual 2025', d:'Resumen de actividades y logros del año.'},
+  {h:'Informe de proyectos', d:'Avance de cada centro y programa.'},
+  {h:'Estatutos de la fundación', d:'Documento constitutivo y fines institucionales.'},
+  {h:'Estados financieros 2025', d:'Ingresos, egresos y uso de los recursos.'}
+];
+
+const NEWS = [
+  {tag:'El Torno', date:'27 oct 2026', h:'Conoce el CDI 390 El Torno', file:'IMG_5405-scaled.jpg', tone:'lime', url:'https://refugioesperanza.org/2026/10/27/conoce-el-cdi-390-el-torno/'},
+  {tag:'La Bélgica', date:'27 oct 2026', h:'Conoce el CDI 827 La Bélgica', file:'evento-ninos-optimizada.jpg', tone:'lime', url:'https://refugioesperanza.org/2026/10/27/conoce-el-cdi-827-la-belgica/'},
+  {tag:'Deporte', date:'27 oct 2026', h:'¡Subcampeones de la Copa Planeta!', file:'WhatsApp-Image-2026-03-04-at-08.20.29.jpeg', tone:'forest', url:'https://refugioesperanza.org/2026/10/27/subcampeones-de-la-copa-planeta/'}
+];
+
+const P = {
+  'albergue':{line:'proteccion', name:'Albergue Refugio Esperanza', kind:'Hogar de niños', file:'pastores.jpg',
+    excerpt:'Casa-hogar para niñas, niños, adolescentes y jóvenes en situación de orfandad y abuso.',
+    lead:'Una casa-hogar para niñas, niños, adolescentes y jóvenes (NNAJ) en situación de orfandad total o parcial y de abuso sexual. Les brindamos un entorno familiar seguro, amor, educación sólida y formación en principios cristianos, para que descubran su propósito y desarrollen sus dones y talentos.',
+    bullets:['Un entorno familiar seguro y restaurador','Educación sólida y formación técnica','Acompañamiento psicológico, pastoral y espiritual'],
+    blocks:[
+      {t:'mv', mision:'Somos una casa-hogar para niños, niñas, adolescentes y jóvenes (NNAJ) en situación de orfandad total o parcial y abuso sexual. Brindamos amor, educación sólida, formación en principios cristianos a través de discipulados y capacitación en carreras técnicas según su orientación vocacional, con las herramientas para desarrollar sus dones y talentos con excelencia y responsabilidad.', vision:'Ser una red cristiana nacional e internacional de orfanatos bajo el diseño de hogar y familia, que ayuda a más de 500 niños, niñas y adolescentes, con programas adaptados a su edad en problemáticas de orfandad y abuso sexual, en ambientes adecuados para su crecimiento e integración.'},
+      {t:'cards', eyebrow:'Nuestro enfoque', title:'Un cuidado que restaura', lead:'Centramos la atención en el bienestar espiritual, emocional, educativo, social y físico de cada niña, niño, adolescente y joven.', cols:2, items:[
+        {i:'heart', h:'Cuidado informado en trauma (TBRI)', d:'Todo nuestro equipo técnico y de educadores está formado en este enfoque, para brindar un ambiente seguro, comprensivo y restaurador.'},
+        {i:'home', h:'Entorno familiar y restauración espiritual', d:'Promovemos un verdadero sentido de hogar e identidad como hijos de Dios, con acompañamiento pastoral, oración, lectura bíblica y discipulado.'}]},
+      {t:'cards', eyebrow:'Acompañamiento para la vida', title:'Áreas de atención integral', cols:2, soft:true, items:[
+        {i:'smile', h:'Psicología y salud mental', d:'Programas grupales por etapas de desarrollo, desde «Mi Lugar Seguro» para los más pequeños hasta «Conexión con mi Propósito» para adolescentes, además de atención terapéutica individual.'},
+        {i:'book', h:'Educación y formación académica', d:'Acceso y permanencia escolar con tutorías, reforzamiento y talleres de computación, mecanografía y desarrollo personal.'},
+        {i:'sprout', h:'Desarrollo juvenil y vida independiente', d:'Jóvenes mayores de 16 años identifican su vocación y elaboran su Plan de Vida hacia la educación técnica o universitaria y la inserción laboral.'},
+        {i:'shield', h:'Trabajo social y protección integral', d:'Seguimiento legal, documental y de salud de cada caso, en coordinación con las redes de protección de la niñez.'}]},
+      {t:'products'},
+      {t:'cards', eyebrow:'Lo que estamos viviendo', title:'Logros y actividades recientes', cols:3, soft:true, items:LOGROS},
+      {t:'stories'}
+    ]},
+  'cdi-el-torno':{line:'comunidad', name:'CDI 390 El Torno', kind:'Centro de Desarrollo Infantil', file:'mejoradoo1.jpg',
+    excerpt:'Educación, alimentación, salud y formación en valores para la primera infancia en El Torno.',
+    lead:'El CDI 390 El Torno es un espacio enfocado en el desarrollo integral de niñas y niños, que promueve su crecimiento físico, emocional y educativo en un ambiente seguro y formativo.',
+    blocks:[PILLARS_CDI,
+      {t:'facts', title:'Datos del centro', file:'mejorado2.jpg', items:[['Ubicación','El Torno, Santa Cruz – Bolivia','Dirección exacta por completar'],['Edades que atiende',null],['Niñas y niños atendidos',null],['Horario de atención',null]]},
+      {t:'gallery', title:'Momentos en el CDI', files:['WhatsApp-Image-2026-03-04-at-08.20.10.jpeg','IMG_5405-scaled.jpg','WhatsApp-Image-2026-03-04-at-08.20.29.jpeg']}]},
+  'cdi-la-belgica':{line:'comunidad', name:'CDI 827 La Bélgica', kind:'Centro de Desarrollo Infantil', file:'NINOS.jpg',
+    excerpt:'Educación, alimentación, salud y formación en valores para la primera infancia en La Bélgica.',
+    lead:'El CDI 827 La Bélgica es un espacio enfocado en el desarrollo integral de niñas y niños, que promueve su crecimiento físico, emocional y educativo en un ambiente seguro y formativo.',
+    blocks:[PILLARS_CDI,
+      {t:'facts', title:'Datos del centro', file:'mejorado-ninos.jpg', items:[['Ubicación','La Bélgica, Santa Cruz – Bolivia','Dirección exacta por completar'],['Edades que atiende',null],['Niñas y niños atendidos',null],['Horario de atención',null]]},
+      {t:'gallery', title:'Momentos en el CDI', files:['evento-ninos-optimizada.jpg','OKOK.jpg','WhatsApp-Image-2026-03-04-at-08.20.asd40.jpeg']}]},
+  'colegio-vida-y-luz':{line:'educacion', name:'Colegio Vida y Luz', kind:'Unidad educativa', file:'ninas.jpg',
+    excerpt:'Formación escolar dentro de la línea Educación y plan de vida.',
+    lead:'El Colegio Vida y Luz forma parte de la línea Educación y plan de vida de la Fundación Refugio Esperanza.',
+    blocks:[
+      {t:'facts', title:'Datos del colegio', file:'jovenes.jpg', items:[['Niveles que ofrece',null],['Ubicación',null],['Estudiantes',null],['Inscripciones',null]]},
+      {t:'soon', text:'Estamos preparando la información completa del colegio: propuesta educativa, niveles, horarios e inscripciones.'}]},
+  'universidad-jada':{line:'educacion', name:'Universidad JADA', kind:'Educación superior', file:'JOVENES-2.jpg', badge:'Muy pronto',
+    excerpt:'Nuevo proyecto educativo para formar líderes con valores y compromiso social.',
+    lead:'Nuevo proyecto educativo de la Fundación Refugio Esperanza para formar líderes con valores y compromiso social.',
+    blocks:[{t:'soon', text:'Muy pronto compartiremos las carreras, la modalidad de estudio y las fechas de inscripción. Escríbenos si quieres recibir la información apenas esté disponible.'}]},
+  'seminario-jada':{line:'espiritual', name:'Seminario JADA', kind:'Formación espiritual', file:'Foto-pastor.jpg',
+    excerpt:'Formación bíblica y desarrollo del carácter cristiano.',
+    lead:'El Seminario JADA forma parte de la línea Formación espiritual y desarrollo del carácter de la Fundación Refugio Esperanza.',
+    blocks:[
+      {t:'facts', title:'Datos del seminario', file:'pastores.jpg', items:[['Programas de formación',null],['Modalidad',null],['Duración',null],['Inscripciones',null]]},
+      {t:'soon', text:'Estamos preparando la información completa del seminario: programas, docentes y requisitos de admisión.'}]}
+};
+Object.keys(P).forEach(k => { P[k].key = k; P[k].tone = LINES[P[k].line].tone; });
+
+/* ======== Helpers ======== */
+function ph(file, tone, cls, alt){
+  return '<figure class="ph' + (cls ? ' ' + cls : '') + '" data-file="' + file + '" data-tone="' + tone + '" data-alt="' + (alt || '') + '"></figure>';
+}
+function initPh(root){
+  root.querySelectorAll('.ph[data-file]').forEach(f => {
+    if (f.dataset.ready) return;
+    f.dataset.ready = '1';
+    f.insertAdjacentHTML('afterbegin', '<span class="ph-ic" aria-hidden="true">' + ic('camera') + '</span><figcaption>Foto · ' + f.dataset.file + '</figcaption>');
+    if (f.dataset.alt) { f.setAttribute('role', 'img'); f.setAttribute('aria-label', f.dataset.alt); }
+    if (ONSITE) {
+      const img = new Image();
+      img.alt = f.dataset.alt || '';
+      img.loading = 'lazy';
+      img.onload = () => f.classList.add('has-img');
+      img.src = UPLOADS + f.dataset.file;
+      f.prepend(img);
+    }
+  });
+}
+function card(it, extra){
+  return '<div class="card">' + '<span class="ic-s">' + ic(it.i) + '</span><h3>' + it.h + '</h3><p>' + it.d + '</p>' + (extra || '') + '</div>';
+}
+function newsCard(n){
+  return '<a class="news" href="' + n.url + '" target="_blank" rel="noopener">' + ph(n.file, n.tone) +
+    '<div class="news-body"><div class="news-meta"><span class="tag">' + n.tag + '</span><span>' + n.date + '</span></div><h3>' + n.h + '</h3><span class="link">Leer más ' + ic('arrow') + '</span></div></a>';
+}
+const $ = (s, r) => (r || document).querySelector(s);
+const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+
+/* ======== Render estático desde datos ======== */
+$('#home-progs').innerHTML = Object.values(LINES).map(l =>
+  '<article class="prog"><span class="ic-c c-' + l.tone + '">' + ic(l.icon) + '</span><h3>' + l.name + '</h3><p>' + l.desc + '</p><div class="chips">' +
+  l.projects.map(k => '<a class="chip c-' + l.tone + '" href="#' + k + '">' + P[k].name + '</a>').join('') + '</div></article>').join('');
+
+$('#lines').innerHTML = Object.values(LINES).map(l =>
+  '<div class="line-block t-' + l.tone + '"><div class="line-info"><span class="ic-c">' + ic(l.icon) + '</span><h2>' + l.full + '</h2><p>' + l.desc + '</p></div>' +
+  '<div class="proj-cards">' + l.projects.map(k => {
+    const p = P[k];
+    return '<a class="pcard" href="#' + k + '">' + ph(p.file, l.tone) + '<div class="pcard-body"><h3>' + p.name + (p.badge ? '<span class="badge">' + p.badge + '</span>' : '') + '</h3><span class="kind">' + p.kind + '</span><p>' + p.excerpt + '</p><span class="link">Conocer ' + ic('arrow') + '</span></div></a>';
+  }).join('') + '</div></div>').join('');
+
+$('#org-prog').innerHTML = Object.values(LINES).map(l =>
+  '<div class="t-' + l.tone + '"><h3>' + l.full + '</h3>' + l.projects.map(k => '<a href="#' + k + '">' + P[k].name + ic('arrow') + '</a>').join('') + '</div>').join('');
+
+$('#f-progs').innerHTML = Object.values(P).map(p => '<li><a href="#' + p.key + '">' + p.name + '</a></li>').join('');
+$('#home-news').innerHTML = NEWS.map(newsCard).join('');
+$('#impact-news').innerHTML = NEWS.map(newsCard).join('');
+$('#impact-logros').innerHTML = LOGROS.map(it => card(it)).join('');
+$('#impact-stories').innerHTML = STORIES.map(s => '<article class="story"><span class="qm" aria-hidden="true">“</span><h3>' + s.h + '</h3><p>' + s.d + '</p></article>').join('');
+$('#destinos-t').innerHTML = DESTINOS.map(it => card(it)).join('');
+$('#destinos-d').innerHTML = DESTINOS.map(it => card(it)).join('');
+$('#docs').innerHTML = DOCS.map(d => '<div class="card head-row"><span class="ic-s">' + ic('file') + '</span><div><h3>' + d.h + '</h3><p>' + d.d + '</p><div class="btns" style="margin-top:6px"><span class="todo">PDF por subir</span><a class="link" href="#contacto" data-asunto="Transparencia">Solicitar ' + ic('arrow') + '</a></div></div></div>').join('');
+$('#ways').innerHTML = WAYS.map(w => {
+  const attrs = w.href ? 'href="' + w.href + '"' + (w.freq ? ' data-freq-set="' + w.freq + '"' : '') : 'href="#participa" data-scroll="' + w.scroll + '"' + (w.tipo ? ' data-tipo="' + w.tipo + '"' : '');
+  return card(w, '<a class="link" ' + attrs + '>' + w.cta + ' ' + ic('arrow') + '</a>');
+}).join('');
+$('#areas').innerHTML = AREAS.map(it => card(it)).join('');
+
+const progOpts = '<option value="general">Donde más se necesite</option>' + Object.values(P).map(p => '<option value="' + p.key + '">' + p.name + '</option>').join('');
+$('#d-prog').innerHTML = progOpts;
+$('#c-prog').innerHTML = progOpts;
+
+/* ======== Detalle de proyecto ======== */
+function renderBlock(b, p){
+  const L = LINES[p.line];
+  if (b.t === 'mv') return '<div class="sec"><div class="wrap"><div class="sec-head"><h2>Misión y visión</h2><span class="rule"></span></div><div class="mv"><div><h3>Misión</h3><p>' + b.mision + '</p></div><div><h3>Visión</h3><p>' + b.vision + '</p></div></div></div></div>';
+  if (b.t === 'cards') return '<div class="sec' + (b.soft ? ' soft' : '') + '"><div class="wrap"><div class="sec-head">' + (b.eyebrow ? '<span class="eyebrow">' + b.eyebrow + '</span>' : '') + '<h2>' + b.title + '</h2><span class="rule"></span>' + (b.lead ? '<p>' + b.lead + '</p>' : '') + '</div><div class="cards" style="--cols:' + b.cols + '">' + b.items.map(it => card(it)).join('') + '</div></div></div>';
+  if (b.t === 'products') return '<div class="sec"><div class="wrap split"><div><span class="eyebrow">Sostenibilidad</span><h2 style="font-size:clamp(1.4rem,2.6vw,2rem);font-weight:800">Productos de Esperanza</h2><p class="lead" style="margin-top:16px">Nuestros talleres productivos funcionan como espacios formativos y escuelas de negocios para los jóvenes. Con la marca Productos de Esperanza comercializamos lo que se produce en ellos.</p><p style="margin-top:14px;color:var(--muted)">Los ingresos apoyan la sostenibilidad del hogar y financian el fondo de becas y ahorro para el proceso de independencia de nuestros jóvenes.</p><div class="chips" style="margin-top:22px"><span class="chip c-forest">Carpintería</span><span class="chip c-lime">Panadería</span><span class="chip c-sky">Costura</span><span class="chip c-orange">Decoración</span></div></div>' + ph('JOVENES-2.jpg', L.tone, 'arch', 'Jóvenes en los talleres') + '</div></div>';
+  if (b.t === 'stories') return '<div class="sec"><div class="wrap"><div class="sec-head"><span class="eyebrow">Historias que inspiran</span><h2>Vidas transformadas</h2><span class="rule"></span><p>Compartimos estas historias reservando los nombres para proteger la identidad de nuestros niños.</p></div><div class="cards" style="--cols:2">' + STORIES.map(s => '<article class="story"><span class="qm" aria-hidden="true">“</span><h3>' + s.h + '</h3><p>' + s.d + '</p></article>').join('') + '</div></div></div>';
+  if (b.t === 'facts') return '<div class="sec soft"><div class="wrap split">' + ph(b.file, L.tone, '', '') + '<div><span class="eyebrow">Información del centro</span><h2 style="font-size:clamp(1.4rem,2.6vw,2rem);font-weight:800;margin-bottom:22px">' + b.title + '</h2><div class="facts">' + b.items.map(f => '<div class="fact"><span>' + f[0] + '</span>' + (f[1] ? '<b>' + f[1] + (f[2] ? '<br><span class="todo" style="margin-top:6px">' + f[2] + '</span>' : '') + '</b>' : '<span class="todo">Por completar</span>') + '</div>').join('') + '</div></div></div></div>';
+  if (b.t === 'gallery') return '<div class="sec"><div class="wrap"><div class="sec-head"><span class="eyebrow">Nuestro día a día</span><h2>' + b.title + '</h2><span class="rule"></span></div><div class="gallery">' + b.files.map(f => ph(f, L.tone)).join('') + '</div></div></div>';
+  if (b.t === 'soon') return '<div class="sec"><div class="wrap"><div class="soon">' + ic('sprout') + '<h3 style="font-size:.95rem">Información en preparación</h3><p>' + b.text + '</p><a class="btn btn-line" href="#contacto" data-asunto="Información general">Quiero recibir información</a></div></div></div>';
+  return '';
+}
+function renderProject(key){
+  const p = P[key], L = LINES[p.line];
+  const others = Object.values(P).filter(o => o.key !== key);
+  const html =
+    '<div class="t-' + L.tone + '">' +
+    '<div class="phero proj"><svg class="arch-deco" viewBox="0 0 520 340" aria-hidden="true"><path d="M30 330C40 220 120 110 258 22"/><path d="M490 330C480 220 400 110 262 22"/></svg><div class="wrap proj-grid"><div>' +
+    '<nav class="crumbs" aria-label="Ruta"><a href="#inicio">Inicio</a><span>/</span><a href="#programas">Programas</a><span>/</span><span>' + p.name + '</span></nav>' +
+    '<span class="line-chip">' + L.name + '</span>' +
+    '<h1>' + p.name + (p.badge ? '<span class="badge">' + p.badge + '</span>' : '') + '</h1><span class="kind">' + p.kind + '</span>' +
+    '<p class="lead" style="margin-top:18px">' + p.lead + '</p>' +
+    (p.bullets ? '<ul class="checks-list">' + p.bullets.map(b => '<li>' + ic('check') + b + '</li>').join('') + '</ul>' : '') +
+    '<div class="btns" style="margin-top:26px"><a class="btn btn-orange" href="#donar" data-program="' + key + '">' + ic('heart') + 'Apoya este programa</a><a class="btn btn-line" href="#participa" data-scroll="vol-form" data-tipo="Voluntariado">Ser voluntario</a></div>' +
+    '<div class="note-row"><span class="note">Color de programa: ' + ({forest:'Verde Bosque',lime:'Verde Lima',sky:'Azul Claro',navy:'Azul Medianoche'})[L.tone] + ' · Manual VII</span></div>' +
+    '</div>' + ph(p.file, L.tone, 'arch', p.name) + '</div></div>' +
+    p.blocks.map(b => renderBlock(b, p)).join('') +
+    '<div class="sec"><div class="wrap"><div class="cta-band"><svg class="arch-deco" viewBox="0 0 520 340" aria-hidden="true"><path d="M30 330C40 220 120 110 258 22"/><path d="M490 330C480 220 400 110 262 22"/></svg>' +
+    '<div><h2>Ayúdanos a seguir sembrando esperanza</h2><p>Tu aporte hace posible que ' + p.name + ' siga acompañando a cada niña, niño y joven con educación, cuidado y amor.</p></div>' +
+    '<div class="btns"><a class="btn btn-orange" href="#donar" data-program="' + key + '">' + ic('heart') + 'Quiero donar</a><a class="btn btn-ghost" href="#participa" data-scroll="vol-form" data-tipo="Voluntariado">Ser voluntario</a></div></div>' +
+    '<div class="more"><span>Otros centros</span>' + others.map(o => '<a class="chip c-' + o.tone + '" href="#' + o.key + '">' + o.name + '</a>').join('') + '</div></div></div>' +
+    '</div>';
+  $('#proj').innerHTML = html;
+  initPh($('#proj'));
+}
+
+/* ======== Donación ======== */
+const don = {freq:'mensual', amount:100, program:'general', method:'qr'};
+const MET = {qr:'QR', bo:'Transferencia Bolivia', ext:'Desde el exterior', esp:'En especie'};
+const progName = (k) => k === 'general' ? 'Donde más se necesite' : P[k].name;
+function fmt(n){ return 'Bs ' + (n || 0).toLocaleString('es-BO'); }
+function updateDon(){
+  $$('[data-freq]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.freq === don.freq)));
+  const custom = $('#d-otro').value !== '';
+  $$('.amt').forEach(b => b.setAttribute('aria-pressed', String(!custom && Number(b.dataset.amt) === don.amount)));
+  $('#s-amt').innerHTML = fmt(don.amount) + (don.freq === 'mensual' ? ' <small>/ mes</small>' : '');
+  $('#s-freq').textContent = don.freq === 'mensual' ? 'Padrino mensual' : 'Aporte único';
+  $('#s-prog').textContent = progName(don.program);
+  $('#s-met').textContent = MET[don.method];
+  $('#s-txt').textContent = don.freq === 'mensual'
+    ? 'Tu aporte mensual sostiene educación, alimentación y cuidado durante todo el año.'
+    : 'Tu aporte se convierte hoy mismo en educación, alimentación y cuidado.';
+  $('#d-prog').value = don.program;
+  $('#c-prog').value = don.program;
+  $('#c-monto').value = don.amount || '';
+  $('#c-metodo').value = don.method;
+}
+$$('[data-freq]').forEach(b => b.addEventListener('click', () => { don.freq = b.dataset.freq; updateDon(); }));
+$$('.amt').forEach(b => b.addEventListener('click', () => { $('#d-otro').value = ''; don.amount = Number(b.dataset.amt); updateDon(); }));
+$('#d-otro').addEventListener('input', e => { const v = parseInt(e.target.value, 10); don.amount = isNaN(v) ? 0 : v; updateDon(); });
+$('#d-prog').addEventListener('change', e => { don.program = e.target.value; updateDon(); });
+function selectTab(met){
+  don.method = met;
+  $$('.tab').forEach(t => { const on = t.dataset.met === met; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+  $$('.tabpanel').forEach(p => { p.hidden = p.id !== 'p-' + met; });
+  updateDon();
+}
+$$('.tab').forEach(t => t.addEventListener('click', () => selectTab(t.dataset.met)));
+$('.tabs').addEventListener('keydown', e => {
+  if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+  const tabs = $$('.tab'); const i = tabs.findIndex(t => t.getAttribute('aria-selected') === 'true');
+  const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+  selectTab(n.dataset.met); n.focus();
+});
+$('#c-metodo').addEventListener('change', e => selectTab(e.target.value));
+
+/* ======== Formularios de demostración ======== */
+$$('form[data-demo]').forEach(f => {
+  f.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    const card = f.parentElement, ok = $('.success', card);
+    const nameInput = $('input[autocomplete=name]', f);
+    const first = nameInput && nameInput.value.trim().split(/\s+/)[0];
+    const msg = $('[data-msg]', ok);
+    if (f.dataset.kind === 'donacion') {
+      msg.textContent = (first ? first + ', r' : 'R') + 'ecibimos tu confirmación de ' + fmt(Number($('#c-monto').value)) + ' para ' + progName($('#c-prog').value) + '. Te escribiremos para confirmar la recepción.';
+    } else {
+      msg.textContent = (first ? 'Gracias, ' + first + '. ' : '') + 'Recibimos tu mensaje y te escribiremos pronto.';
+    }
+    f.hidden = true; ok.hidden = false;
+  });
+});
+$$('[data-reset]').forEach(b => b.addEventListener('click', () => {
+  const card = b.closest('.form-card'); const f = $('form', card);
+  f.reset(); f.hidden = false; b.closest('.success').hidden = true;
+  if (f.dataset.kind === 'donacion') updateDon();
+}));
+
+/* ======== Copiar ======== */
+function flash(btn, txt){
+  const old = btn.innerHTML; btn.innerHTML = ic('check') + txt;
+  setTimeout(() => { btn.innerHTML = old; }, 1600);
+}
+document.addEventListener('click', e => {
+  const btn = e.target.closest('button[data-copy]');
+  if (!btn) return;
+  const src = btn.closest('.kv, .ccard').querySelector('[data-copy-src]');
+  const text = src.textContent.trim();
+  const fallback = () => { const r = document.createRange(); r.selectNodeContents(src); const s = getSelection(); s.removeAllRanges(); s.addRange(r); flash(btn, 'Seleccionado'); };
+  try { navigator.clipboard.writeText(text).then(() => flash(btn, 'Copiado'), fallback); } catch (err) { fallback(); }
+});
+
+/* ======== Router ======== */
+const VIEWS = ['inicio','quienes-somos','programas','impacto','transparencia','participa','donar','contacto'];
+let pendingScroll = null;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function scrollToId(id){
+  const el = document.getElementById(id);
+  if (!el) return;
+  const y = el.getBoundingClientRect().top + scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hh'), 10) || 72) - 12;
+  scrollTo({top: y, behavior: reduce ? 'auto' : 'smooth'});
+}
+function route(){
+  const h = decodeURIComponent(location.hash.slice(1));
+  let view = VIEWS.includes(h) ? h : (P[h] ? 'proyecto' : 'inicio');
+  if (view === 'proyecto') renderProject(h);
+  $$('.view').forEach(v => { v.hidden = v.dataset.view !== view; });
+  const navKey = view === 'proyecto' ? 'programas' : view;
+  $$('[data-nav]').forEach(a => { a.classList.toggle('active', a.dataset.nav === navKey); if (a.dataset.nav === navKey) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  closeMenu();
+  if (pendingScroll) { const id = pendingScroll; pendingScroll = null; requestAnimationFrame(() => scrollToId(id)); }
+  else scrollTo({top: 0, behavior: 'auto'});
+}
+function applyPrefill(a){
+  if (a.dataset.program) { don.program = a.dataset.program; updateDon(); }
+  if (a.dataset.freqSet) { don.freq = a.dataset.freqSet; updateDon(); }
+  if (a.dataset.tipo) $('#v-tipo').value = a.dataset.tipo;
+  if (a.dataset.asunto) $('#ct-asunto').value = a.dataset.asunto;
+}
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"], button[data-scroll]');
+  if (!a) return;
+  applyPrefill(a);
+  if (a.tagName === 'BUTTON') { scrollToId(a.dataset.scroll); return; }
+  const target = a.getAttribute('href');
+  const current = location.hash || '#inicio';
+  if (a.dataset.scroll) pendingScroll = a.dataset.scroll;
+  if (target === current) {
+    e.preventDefault();
+    closeMenu();
+    if (pendingScroll) { const id = pendingScroll; pendingScroll = null; scrollToId(id); }
+    else scrollTo({top: 0, behavior: reduce ? 'auto' : 'smooth'});
+  }
+});
+window.addEventListener('hashchange', route);
+
+/* ======== Menú móvil ======== */
+const nav = $('#nav'), burger = $('#burger');
+function closeMenu(){ nav.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); burger.innerHTML = ic('menu'); }
+burger.addEventListener('click', () => {
+  const open = !nav.classList.contains('open');
+  nav.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', String(open));
+  burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  burger.innerHTML = ic(open ? 'close' : 'menu');
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+/* ======== Notas del manual ======== */
+const notesBtn = $('#notes-btn');
+function setNotes(on){
+  document.documentElement.classList.toggle('notes-on', on);
+  notesBtn.setAttribute('aria-pressed', String(on));
+  notesBtn.setAttribute('aria-label', on ? 'Ocultar notas del manual' : 'Mostrar notas del manual');
+  $('.lbl', notesBtn).textContent = on ? 'Ocultar notas' : 'Notas del manual';
+  try { localStorage.setItem('re-notes', on ? '1' : '0'); } catch (err) {}
+}
+notesBtn.addEventListener('click', () => setNotes(!document.documentElement.classList.contains('notes-on')));
+let savedNotes = false;
+try { savedNotes = localStorage.getItem('re-notes') === '1'; } catch (err) {}
+setNotes(savedNotes);
+
+initPh(document);
+updateDon();
+route();
+})();
+</script>
+
+</body></html>
